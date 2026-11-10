@@ -2,6 +2,7 @@
 
 from collections import Counter
 from datetime import datetime, timedelta, timezone
+from hashlib import sha256
 from html import escape
 import json
 from pathlib import Path
@@ -19,6 +20,11 @@ SECTIONS = [("about", "about"), ("research", "research"), ("publications", "pubs
 
 def h(value):
     return escape(str(value), quote=True)
+
+
+def versioned_asset(name):
+    digest = sha256((ROOT / "assets" / name).read_bytes()).hexdigest()[:12]
+    return f"/assets/{name}?v={digest}"
 
 
 def external(label, url, css_class="", lang=""):
@@ -184,7 +190,7 @@ def render(locale):
   <meta name="theme-color" content="#101c29"><link rel="icon" type="image/jpeg" href="{avatar}">
   <link rel="preload" href="{base}assets/fonts/serif-regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="{base}assets/fonts/sans-regular.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="{base}assets/site.css"><script defer src="{base}assets/site.js"></script><script defer src="{base}assets/cover.js"></script><script defer src="{base}assets/language.js"></script>
+  <link rel="stylesheet" href="{versioned_asset('site.css')}"><script defer src="{versioned_asset('site.js')}"></script><script defer src="{versioned_asset('cover.js')}"></script><script defer src="{versioned_asset('language.js')}"></script>
 </head>
 <body>
 <a class="skip" href="#about">{h(t['skip'])}</a>
