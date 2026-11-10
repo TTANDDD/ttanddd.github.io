@@ -139,9 +139,24 @@
       ],
       "figures": [
         {
+          "file": "offshore-fig2.webp",
+          "number": "2",
+          "layout": "primary",
+          "width": 1560,
+          "height": 457,
+          "view_box": [0, 0, 1540, 457],
+          "caption": {
+            "en": "Six networks are pretrained on 5 MW turbine simulations and fine-tuned on 15 MW data. One predicts power and the other five each predict a fatigue load.",
+            "zh": "先用 5 MW 风机仿真数据预训练六个网络，再用 15 MW 风机数据微调全部参数。一个网络预测功率，其余五个分别预测一项疲劳载荷。"
+          },
+          "source": "https://doi.org/10.1016/j.oceaneng.2026.126286",
+          "credit": "Qu et al. · Ocean Engineering (2026)",
+          "license": ""
+        },
+        {
           "file": "offshore-fig8.webp",
           "number": "8",
-          "layout": "primary",
+          "layout": "disclosure",
           "width": 1560,
           "height": 1024,
           "view_box": [10, 4, 1540, 1010],
@@ -231,8 +246,23 @@
       ],
       "figures": [
         {
+          "file": "uhpc-fig2.webp",
+          "number": "2",
+          "layout": "primary",
+          "width": 2860,
+          "height": 1668,
+          "caption": {
+            "en": "The constraint-guided network predicts the flexural capacity of prestressed UHPC beams. Its training loss combines data-fitting error with constraints on cross-sectional geometry, reinforcement ratio, and the relationship between tensile and compressive strength.",
+            "zh": "约束引导神经网络预测预应力 UHPC 梁的抗弯承载力。训练损失包含数据拟合误差，以及截面几何、配筋率和混凝土抗拉与抗压强度关系的约束项。"
+          },
+          "source": "https://ijbemr.org/index.php/ber/article/view/31#fig-2",
+          "credit": "© 2025 Hailong Qu, Le Teng, Yanping Zhu, Zhongke Qu and Hantao Wu · CC BY-NC-ND 4.0",
+          "license": "https://creativecommons.org/licenses/by-nc-nd/4.0/"
+        },
+        {
           "file": "uhpc-fig7.webp",
           "number": "7",
+          "layout": "disclosure",
           "width": 2032,
           "height": 908,
           "caption": {
@@ -374,6 +404,11 @@
         "en": "Chongqing University",
         "zh": "重庆大学"
       },
+      "logo": {
+        "file": "cqu-emblem.svg",
+        "website": "https://www.cqu.edu.cn/",
+        "source": "https://www.cqu.edu.cn/__local/F/67/13/91F381501973A4F9D10D3340792_2136FE11_3D39D20.pdf?e=.pdf#page=6"
+      },
       "degree": {
         "en": "PhD student in Civil Engineering",
         "zh": "土木工程博士研究生"
@@ -385,6 +420,11 @@
       "institution": {
         "en": "Dalian University of Technology",
         "zh": "大连理工大学"
+      },
+      "logo": {
+        "file": "dlut-emblem.svg",
+        "website": "https://www.dlut.edu.cn/",
+        "source": "https://www.dlut.edu.cn/xxgk/dxwh/xxVI.htm#a1"
       },
       "degree": {
         "en": "Master’s in Civil Engineering",
@@ -398,11 +438,21 @@
         "en": "China University of Mining and Technology",
         "zh": "中国矿业大学"
       },
+      "logo": {
+        "file": "cumt-emblem.svg",
+        "website": "https://www.cumt.edu.cn/",
+        "source": "https://xgc.cumt.edu.cn/__local/3/3B/CB/F3833CC99C9D0095E53E957862E_D3C472C9_43ED3D.pdf#page=4"
+      },
       "degree": {
         "en": "Bachelor’s in Civil Engineering",
         "zh": "土木工程学士"
       }
     }
   ],
+  "employer_logo": {
+    "file": "zhiman-ai.png",
+    "website": "https://zhiman.cn/",
+    "source": "https://zhiman.cn/apple-touch-icon.png"
+  },
   "report": "https://zhiman.cn/research/micius/Micius-Flash-Preview-Technical-Report.pdf"
 }

@@ -12,8 +12,8 @@
     "project": "Project site", "code": "Code", "paper": "Paper", "figure": "Figure {n}", "source": "Source", "close": "Close", "full": "Full-size image", "zoom": "Enlarge", "attribution": "Image credit",
     "date": "Jun – Nov 2026", "company": "Zhiman AI", "intern": "Engineering AI Research and Development Intern", "intern1": "Co-designed EngiWorld, ran model experiments and evaluated the files agents produced in professional engineering software.",
     "intern2": "Designed and tested software-development tasks for Micius-Flash, including a CAD hole-pattern plugin and a PySide6 implementation of Blender modeling workflows.",
-    "report": "Micius-Flash technical report", "contributor": "Contributor", "present": "present", "back": "Back to cover", "credits": "Image credits",
-    "avatarCredit": "The cover uses Hailong Qu’s Google Scholar profile image.", "figCreditNote": "Each paper figure links to its source and lists its credit in the enlarged view."
+    "report": "Micius-Flash technical report", "contributor": "Contributor", "present": "present", "officialSite": "Official website", "back": "Back to cover", "credits": "Image credits",
+    "avatarCredit": "The cover uses Hailong Qu’s Google Scholar profile image.", "organizationCredits": "Organization marks come from their official websites.", "figCreditNote": "Each paper figure links to its source and lists its credit in the enlarged view."
   },
   "zh": {
     "lang": "zh-CN", "name": "屈海龙", "other": "English", "otherLang": "en", "switch": "Switch to English", "experiment": "实验结果",
@@ -28,7 +28,7 @@
     "project": "项目主页", "code": "代码", "paper": "论文", "figure": "图 {n}", "source": "来源", "close": "关闭", "full": "查看原尺寸", "zoom": "放大", "attribution": "图片署名",
     "date": "2026 年 6 月至 11 月", "company": "知满科技（Zhiman AI）", "intern": "工程智能体研发实习生", "intern1": "参与设计 EngiWorld 工程软件评测基准、运行模型实验，并检验智能体交付的工程文件。",
     "intern2": "为 Micius-Flash 设计并验证工程软件开发任务，包括编写 CAD 孔阵列插件，以及使用 PySide6 复现 Blender 建模工作流。",
-    "report": "Micius-Flash 技术报告", "contributor": "报告贡献者", "present": "至今", "back": "返回封面", "credits": "图片来源",
-    "avatarCredit": "封面使用屈海龙的 Google 学术主页头像。", "figCreditNote": "每幅论文配图均附原文链接，点击放大可查看图片署名。"
+    "report": "Micius-Flash 技术报告", "contributor": "报告贡献者", "present": "至今", "officialSite": "官方网站", "back": "返回封面", "credits": "图片来源",
+    "avatarCredit": "封面使用屈海龙的 Google 学术主页头像。", "organizationCredits": "公司标志和校徽取自各机构官网。", "figCreditNote": "每幅论文配图均附原文链接，点击放大可查看图片署名。"
   }
 }

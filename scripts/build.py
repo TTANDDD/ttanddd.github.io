@@ -152,13 +152,22 @@ def metrics(locale):
             f'<dl>{stats}</dl><p>{h(t["checked"])} <time datetime="{h(SCHOLAR["checked_at"])}">{h(stamp)}</time></p></aside>')
 
 
+def organization_header(logo, name, period, role, t):
+    return f"""<div class="org-header">
+      <a class="org-mark" href="{h(logo['website'])}" target="_blank" rel="noopener noreferrer" aria-label="{h(name)} · {h(t['officialSite'])}">
+        <img src="/assets/media/organizations/{h(logo['file'])}" width="64" height="64" alt="" loading="lazy" decoding="async">
+      </a>
+      <div class="org-copy"><span class="period">{h(period)}</span><h3>{h(name)}</h3><p class="org-role">{h(role)}</p></div>
+    </div>"""
+
+
 def education(locale):
     t = LABELS[locale]
     items = []
     for entry in DATA["degrees"]:
-        end = entry["end"] or t["present"]
-        items.append(f'<li><span class="period">{h(entry["year"])} – {h(end)}</span>'
-                     f'<h3>{h(entry["institution"][locale])}</h3><p>{h(entry["degree"][locale])}</p></li>')
+        period = f'{entry["year"]} – {entry["end"] or t["present"]}'
+        header = organization_header(entry["logo"], entry["institution"][locale], period, entry["degree"][locale], t)
+        items.append(f'<li id="degree-{h(entry["year"])}">{header}</li>')
     return "".join(items)
 
 
@@ -169,6 +178,9 @@ def image_credits(locale):
         artwork = project["image"]
         sources = " ".join(external(source["label"][locale], source["url"]) for source in artwork["sources"])
         items.append(h(artwork["credit"][locale]) + " " + sources)
+    marks = [(t["company"], DATA["employer_logo"])]
+    marks.extend((entry["institution"][locale], entry["logo"]) for entry in DATA["degrees"])
+    items.append(h(t["organizationCredits"]) + " " + " ".join(external(name, logo["source"]) for name, logo in marks))
     items.append(h(t["figCreditNote"]))
     return "".join(f"<li>{item}</li>" for item in items)
 
@@ -228,7 +240,7 @@ def render(locale):
 </section>
 <div id="background" class="band background"><div class="shell background-grid">
   <section id="experience" aria-labelledby="work-title"><h2 id="work-title">{h(t['work'])}</h2>
-    <div class="job"><span class="period">{h(t['date'])}</span><h3>{h(t['company'])}</h3><p class="job-role">{h(t['intern'])}</p>
+    <div class="job">{organization_header(DATA['employer_logo'], t['company'], t['date'], t['intern'], t)}
       <p>{h(t['intern1'])}</p><p>{h(t['intern2'])}</p>
       <div class="report">{external(t['report'],DATA['report'],'text-link')}<span>{h(t['contributor'])}</span></div></div>
   </section>
