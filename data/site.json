@@ -1,0 +1,208 @@
+{
+  "person": {
+    "email": "tiyudi789520@gmail.com",
+    "scholar": "https://scholar.google.com/citations?user=_gNt3W8AAAAJ",
+    "github": "https://github.com/TTANDDD",
+    "name": "Hailong Qu"
+  },
+  "fields": [
+    {
+      "id": "agents",
+      "name": "Engineering agents & spatial reasoning"
+    },
+    {
+      "id": "wind",
+      "name": "Wind energy engineering"
+    },
+    {
+      "id": "environment",
+      "name": "Built environment & indoor air quality"
+    },
+    {
+      "id": "structures",
+      "name": "Structural engineering & composite materials"
+    }
+  ],
+  "papers": [
+    {
+      "id": "engiworld",
+      "field": "agents",
+      "status": "preprint",
+      "year": 2026,
+      "title": "EngiWorld: What Can Frontier Agents Deliver in Professional Engineering Environments?",
+      "note": "I co-designed the benchmark, ran model experiments and evaluated the engineering files produced at each stage.",
+      "venue": "arXiv",
+      "role": "cofirst",
+      "authors": "Hongcheng Gao*, Hailong Qu*, Yu Lei*, et al.",
+      "links": [
+        [
+          "arXiv",
+          "https://arxiv.org/abs/2609.37686"
+        ],
+        [
+          "Code",
+          "https://github.com/Hongcheng-Gao/EngiWorld"
+        ],
+        [
+          "Project",
+          "https://engiworld.github.io/"
+        ]
+      ]
+    },
+    {
+      "id": "spatialworld",
+      "field": "agents",
+      "status": "preprint",
+      "year": 2026,
+      "title": "SpatialWorld: Benchmarking Interactive Spatial Reasoning of Multimodal Agents in Real-World Tasks",
+      "note": "I helped design the benchmark, ran experiments and evaluated how agents navigated and manipulated objects across eight simulated environments.",
+      "venue": "arXiv",
+      "role": "cofirst",
+      "authors": "Hongcheng Gao*, Hailong Qu*, Jingyi Tang, et al.",
+      "links": [
+        [
+          "arXiv",
+          "https://arxiv.org/abs/2606.09669"
+        ],
+        [
+          "Code",
+          "https://github.com/Hongcheng-Gao/SpatialWorld"
+        ]
+      ]
+    },
+    {
+      "id": "offshore",
+      "field": "wind",
+      "status": "published",
+      "year": 2026,
+      "title": "Predicting power and fatigue loads of yawed large offshore wind turbine based on cross-scale transfer learning",
+      "note": "A model pretrained on 5 MW turbine simulations was transferred to 15 MW turbines. With 40% of the target-domain data, it matched an XGBoost baseline trained on 80%.",
+      "venue": "Ocean Engineering",
+      "role": "first",
+      "authors": "Hailong Qu, Tianzhen Wei, Guoqing Huang, et al.",
+      "citation": "362, 126286",
+      "top": true,
+      "links": [
+        [
+          "DOI",
+          "https://doi.org/10.1016/j.oceaneng.2026.126286"
+        ]
+      ]
+    },
+    {
+      "id": "indoor",
+      "field": "environment",
+      "status": "accepted",
+      "title": "Probabilistic Short-Term Forecasting of Spatially Heterogeneous Indoor CO₂ Fields with Graph-Spectral Increment Diffusion",
+      "note": "We model short-term changes in indoor CO₂ with graph-spectral increment diffusion to forecast concentration distributions across different locations.",
+      "venue": "Building and Environment",
+      "role": "first",
+      "authors": "Hailong Qu, et al.",
+      "top": true,
+      "links": []
+    },
+    {
+      "id": "bond",
+      "field": "structures",
+      "status": "published",
+      "year": 2025,
+      "title": "A machine learning model based on GAN-ANN data augmentation for predicting the bond strength of FRP-reinforced concrete under high-temperature conditions",
+      "note": "We augmented high-temperature pull-out test data using a GAN, compared six regression models and used SHAP to interpret bond-strength predictions.",
+      "venue": "Composite Structures",
+      "role": "first",
+      "authors": "Hailong Qu, Tianyu Hu, Jiting Qu, Woubishet Zewdu Taffese.",
+      "citation": "369, 119321",
+      "top": true,
+      "links": [
+        [
+          "DOI",
+          "https://doi.org/10.1016/j.compstruct.2025.119321"
+        ]
+      ]
+    },
+    {
+      "id": "uhpc",
+      "field": "structures",
+      "status": "published",
+      "year": 2025,
+      "title": "Prestressed UHPC Beam Flexural Capacity Prediction Improvement with Constraint-Guided Neural Networks",
+      "note": "Geometric, reinforcement and material-strength constraints guide a neural network that predicts the flexural capacity of prestressed ultra-high-performance concrete beams.",
+      "venue": "International Journal of Bridge Engineering, Management and Research",
+      "role": "first",
+      "authors": "Hailong Qu, Le Teng, Yanping Zhu, Zhongke Qu, Hantao Wu.",
+      "citation": "2(3), 214250023",
+      "links": [
+        [
+          "DOI",
+          "https://doi.org/10.70465/ber.v2i3.31"
+        ]
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "EngiWorld",
+      "paper": "engiworld",
+      "image": "engiworld.webp",
+      "category": "Engineering software",
+      "description": "We built 1,301 tasks across 26 professional applications to test whether agents can produce engineering files that meet the task requirements.",
+      "alt": "Technical drawing of a rectangular tube sheet with staggered holes, from an EngiWorld CAD task",
+      "links": [
+        [
+          "Project",
+          "https://engiworld.github.io/"
+        ],
+        [
+          "Code",
+          "https://github.com/Hongcheng-Gao/EngiWorld"
+        ]
+      ]
+    },
+    {
+      "name": "SpatialWorld",
+      "paper": "spatialworld",
+      "image": "spatialworld.webp",
+      "category": "Multimodal agents",
+      "description": "Across 760 interactive tasks, agents use first-person views to explore unfamiliar environments, navigate and manipulate objects.",
+      "alt": "Overhead CARLA map and a first-person driving view from the same SpatialWorld navigation task",
+      "links": [
+        [
+          "Paper",
+          "https://arxiv.org/abs/2606.09669"
+        ],
+        [
+          "Code",
+          "https://github.com/Hongcheng-Gao/SpatialWorld"
+        ]
+      ]
+    }
+  ],
+  "degrees": [
+    {
+      "year": "2025",
+      "end": null,
+      "institution": "Chongqing University",
+      "degree": "PhD student in Civil Engineering"
+    },
+    {
+      "year": "2022",
+      "end": "2025",
+      "institution": "Dalian University of Technology",
+      "degree": "Master’s in Civil Engineering"
+    },
+    {
+      "year": "2018",
+      "end": "2022",
+      "institution": "China University of Mining and Technology",
+      "degree": "Bachelor’s in Civil Engineering"
+    }
+  ],
+  "report": "https://zhiman.cn/research/micius/Micius-Flash-Preview-Technical-Report.pdf",
+  "credits": {
+    "wind": "https://commons.wikimedia.org/wiki/File:Block_Island_Wind_Farm_3.jpg",
+    "cad": "https://github.com/Hongcheng-Gao/EngiWorld/blob/main/task/single-software-execution/gui/autocad/task-06/task-06.json",
+    "spatial": "https://arxiv.org/html/2606.09669v2#A5.T8",
+    "license": "https://creativecommons.org/licenses/by/4.0/",
+    "carla": "https://github.com/carla-simulator/carla#licenses"
+  }
+}
