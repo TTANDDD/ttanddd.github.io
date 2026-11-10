@@ -189,6 +189,20 @@
       ],
       "figures": [
         {
+          "file": "bond-fig1.webp",
+          "number": "1",
+          "width": 1600,
+          "height": 679,
+          "layout": "primary",
+          "caption": {
+            "en": "GAN data augmentation for FRP–concrete bond tests. The generator creates synthetic samples from noise, and the discriminator distinguishes them from experimental records.",
+            "zh": "FRP 筋与混凝土黏结试验的 GAN 数据增广结构。生成器从噪声生成合成样本，判别器区分合成样本与试验记录。"
+          },
+          "source": "https://doi.org/10.1016/j.compstruct.2025.119321",
+          "credit": "Qu et al. · Composite Structures (2025)",
+          "license": ""
+        },
+        {
           "file": "bond-fig16.webp",
           "number": "16",
           "width": 1558,
@@ -199,7 +213,8 @@
           },
           "source": "https://doi.org/10.1016/j.compstruct.2025.119321",
           "credit": "Qu et al. · Composite Structures (2025)",
-          "license": ""
+          "license": "",
+          "layout": "disclosure"
         }
       ],
       "zh_title": "基于 GAN–ANN 数据增强的高温下 FRP 筋与混凝土黏结强度预测"

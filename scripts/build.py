@@ -62,13 +62,17 @@ def paper_figure(figure, locale, base):
     number = t["figure"].format(n=figure["number"])
     caption = figure["caption"][locale]
     url = f'{base}assets/media/papers/{h(figure["file"])}'
-    return f"""<figure class="paper-figure">
+    classes = "paper-figure figure-primary" if figure.get("layout") == "primary" else "paper-figure"
+    content = f"""<figure class="{classes}">
         <a class="figure-open" href="{url}" data-figure data-credit="{h(figure['credit'])}" data-license="{h(figure['license'])}" aria-label="{h(t['zoom'])} · {h(number)} · {h(caption)}">
           <img src="{url}" alt="{h(caption)}" width="{figure['width']}" height="{figure['height']}" loading="lazy" decoding="async"><span class="zoom-corner" aria-hidden="true">⤢</span>
         </a>
         <figcaption><span class="figure-number">{h(number)}</span><span class="figure-caption">{h(caption)}</span>
           {external(t['source'],figure['source'],'figure-source')}</figcaption>
       </figure>"""
+    if figure.get("layout") == "disclosure":
+        return f'<details class="extra-figure"><summary>{h(t["experiment"])} · {h(number)}</summary>{content}</details>'
+    return content
 
 
 def paper_entry(paper, locale, base):

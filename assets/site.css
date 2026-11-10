@@ -268,6 +268,13 @@ h2{font:400 clamp(38px,4vw,56px)/1.06 var(--serif);letter-spacing:-.032em}
 .paper-figure figcaption { margin-top:6px; font-size:12px; line-height:1.47; color:var(--muted); }
 .figure-number { font-weight:650; color:var(--text); margin-right:5px; }
 .figure-caption { margin-right:5px; }
+.figure-primary,.extra-figure { grid-column:1/-1; }
+.figure-primary { max-width:700px; }
+.figure-primary .figure-open { height:auto; padding:clamp(8px,1.3vw,18px); }
+.figure-primary .figure-open img { height:auto; }
+.extra-figure { padding-block:7px 2px; border-top:1px solid var(--border); max-width:700px; }
+.extra-figure summary { width:fit-content; cursor:pointer; color:var(--accent); font-size:12.5px; font-weight:600; }
+.extra-figure[open] .paper-figure { margin-top:11px; }
 .figure-source { color:var(--accent); font-weight:550; white-space:nowrap; }
 .figure-viewer { padding:18px 22px; width:min(1040px,94vw); max-height:92vh; max-height:92dvh; border:1px solid var(--strong-border); border-radius:6px; background:var(--paper); color:var(--ink); overflow:auto; }
 .figure-viewer::backdrop { background:rgb(8 18 23 / .86); }

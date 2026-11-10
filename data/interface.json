@@ -1,6 +1,6 @@
 {
   "en": {
-    "lang": "en", "name": "Hailong Qu", "other": "中文", "otherLang": "zh-CN", "switch": "Switch to Chinese",
+    "lang": "en", "name": "Hailong Qu", "other": "中文", "otherLang": "zh-CN", "switch": "Switch to Chinese", "experiment": "Experimental results",
     "home": "Home", "skip": "Skip to profile", "about": "About", "research": "Research", "pubs": "Publications", "background": "Background", "work": "Experience", "edu": "Education", "menu": "Menu", "theme": "Change color theme",
     "degree": "PhD student in Civil Engineering at Chongqing University", "focus": "AI for Science", "agents": "Engineering agents", "wind": "Wind engineering",
     "enter": "Explore profile", "mail": "Email", "cv": "Public CV", "portrait": "Profile image from Hailong Qu’s Google Scholar page",
@@ -16,7 +16,7 @@
     "avatarCredit": "The cover uses Hailong Qu’s Google Scholar profile image.", "cadCredit": "The EngiWorld project card uses an original drawing based on its CAD tube-sheet task.", "spatialCredit": "The SpatialWorld project card combines two CARLA views from Table 8 by Hongcheng Gao, Hailong Qu et al. (2026).", "spec": "Task specification", "table": "Table 8", "carla": "CARLA asset licenses", "figCreditNote": "Each paper figure links to its source and lists its credit in the enlarged view."
   },
   "zh": {
-    "lang": "zh-CN", "name": "屈海龙", "other": "English", "otherLang": "en", "switch": "Switch to English",
+    "lang": "zh-CN", "name": "屈海龙", "other": "English", "otherLang": "en", "switch": "Switch to English", "experiment": "实验结果",
     "home": "首页", "skip": "跳到个人简介", "about": "个人简介", "research": "研究", "pubs": "论文", "background": "经历", "work": "实习经历", "edu": "教育背景", "menu": "菜单", "theme": "切换明暗主题",
     "degree": "重庆大学土木工程博士研究生", "focus": "AI for Science", "agents": "工程智能体", "wind": "风工程",
     "enter": "进入主页", "mail": "邮箱", "cv": "公开简历", "portrait": "屈海龙的 Google 学术主页头像",
