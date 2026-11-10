@@ -1,7 +1,9 @@
 # Hailong Qu
 
-The English academic homepage of Hailong Qu, a PhD student at Chongqing University. Live at [ttanddd.github.io](https://ttanddd.github.io/).
+[Academic homepage](https://ttanddd.github.io/) · [中文](https://ttanddd.github.io/zh/)
 
-Public research records are in `data/site.json`. Edit them and run `python scripts/build.py` to regenerate `index.html`. The static site is served from the root of the main branch by GitHub Pages.
+Edit `data/site.json` for public publications, figures, and projects. Interface text lives in `data/interface.json`. Run `python scripts/build.py` to render both editions, then commit the generated HTML. The paper figures link to their original articles. Click a figure for the full image, credit and source.
 
-The downloadable CV is the public edition. The footer credits the images. The font licenses are included in `assets/fonts/`.
+The Google Scholar workflow runs daily at 00:17 UTC (08:17 in China). It reads the all-time metrics from the public author profile and matches citation counts to the curated publication list. A missing citation count is left blank. Failed or incomplete profile requests leave the last verified snapshot in place. A successful update commits `data/scholar.json` with the rendered pages and requests a GitHub Pages build. You can also run the workflow from the repository’s Actions tab.
+
+GitHub Pages serves the root of the main branch. Website downloads are the public editions of the CV. Image credits appear alongside the figures and in the footer. Font licenses are in `assets/fonts/`.

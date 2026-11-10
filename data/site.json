@@ -3,24 +3,31 @@
     "email": "tiyudi789520@gmail.com",
     "scholar": "https://scholar.google.com/citations?user=_gNt3W8AAAAJ",
     "github": "https://github.com/TTANDDD",
-    "name": "Hailong Qu"
+    "name": "Hailong Qu",
+    "native_name": "屈海龙",
+    "avatar": "scholar-avatar.jpg"
   },
   "fields": [
     {
       "id": "agents",
-      "name": "Engineering agents & spatial reasoning"
+      "name": {
+        "en": "Engineering agents & spatial reasoning",
+        "zh": "工程智能体与空间推理"
+      }
     },
     {
       "id": "wind",
-      "name": "Wind energy engineering"
-    },
-    {
-      "id": "environment",
-      "name": "Built environment & indoor air quality"
+      "name": {
+        "en": "Wind energy engineering",
+        "zh": "风能工程"
+      }
     },
     {
       "id": "structures",
-      "name": "Structural engineering & composite materials"
+      "name": {
+        "en": "Structural engineering & composite materials",
+        "zh": "结构工程与复合材料"
+      }
     }
   ],
   "papers": [
@@ -30,7 +37,10 @@
       "status": "preprint",
       "year": 2026,
       "title": "EngiWorld: What Can Frontier Agents Deliver in Professional Engineering Environments?",
-      "note": "I co-designed the benchmark, ran model experiments and evaluated the engineering files produced at each stage.",
+      "note": {
+        "en": "I co-designed the benchmark, ran model experiments and evaluated the engineering files produced at each stage.",
+        "zh": "我参与了基准设计、模型实验与评测，逐阶段检查智能体交付的工程文件是否满足任务要求。"
+      },
       "venue": "arXiv",
       "role": "cofirst",
       "authors": "Hongcheng Gao*, Hailong Qu*, Yu Lei*, et al.",
@@ -47,7 +57,23 @@
           "Project",
           "https://engiworld.github.io/"
         ]
-      ]
+      ],
+      "figures": [
+        {
+          "file": "engiworld-fig1.webp",
+          "number": "1",
+          "width": 1600,
+          "height": 769,
+          "caption": {
+            "en": "EngiWorld uses tasks such as building-model export and cross-software analysis of a finned plate to evaluate agents in six engineering domains.",
+            "zh": "EngiWorld 以建筑模型导出和散热板的跨软件分析为例，展示六个工程领域的智能体任务。"
+          },
+          "source": "https://arxiv.org/html/2609.37686v2#S1.F1",
+          "credit": "© 2026 EngiWorld Authors · MIT",
+          "license": "https://github.com/Hongcheng-Gao/EngiWorld/blob/main/LICENSE"
+        }
+      ],
+      "zh_title": "EngiWorld：前沿智能体能在专业工程环境中交付什么？"
     },
     {
       "id": "spatialworld",
@@ -55,7 +81,10 @@
       "status": "preprint",
       "year": 2026,
       "title": "SpatialWorld: Benchmarking Interactive Spatial Reasoning of Multimodal Agents in Real-World Tasks",
-      "note": "I helped design the benchmark, ran experiments and evaluated how agents navigated and manipulated objects across eight simulated environments.",
+      "note": {
+        "en": "I helped design the benchmark, ran experiments and evaluated how agents navigated and manipulated objects across eight simulated environments.",
+        "zh": "我参与了基准设计与模型实验，评估智能体在八个仿真环境中通过第一人称观测导航和操作物体的能力。"
+      },
       "venue": "arXiv",
       "role": "cofirst",
       "authors": "Hongcheng Gao*, Hailong Qu*, Jingyi Tang, et al.",
@@ -68,7 +97,23 @@
           "Code",
           "https://github.com/Hongcheng-Gao/SpatialWorld"
         ]
-      ]
+      ],
+      "figures": [
+        {
+          "file": "spatialworld-fig1.webp",
+          "number": "1",
+          "width": 1600,
+          "height": 1241,
+          "caption": {
+            "en": "Agents use first-person observations to act in indoor, street and game environments. The benchmark checks their final state and the number of actions taken.",
+            "zh": "智能体根据第一人称观测在室内、街道和游戏环境中行动。基准检查任务终态，并对照参考轨迹评估执行步数。"
+          },
+          "source": "https://arxiv.org/html/2606.09669v2#S2.F1",
+          "credit": "Gao, Qu et al. (2026) · CC BY 4.0",
+          "license": "https://creativecommons.org/licenses/by/4.0/"
+        }
+      ],
+      "zh_title": "SpatialWorld：真实任务中多模态智能体的交互式空间推理基准"
     },
     {
       "id": "offshore",
@@ -76,7 +121,10 @@
       "status": "published",
       "year": 2026,
       "title": "Predicting power and fatigue loads of yawed large offshore wind turbine based on cross-scale transfer learning",
-      "note": "A model pretrained on 5 MW turbine simulations was transferred to 15 MW turbines. With 40% of the target-domain data, it matched an XGBoost baseline trained on 80%.",
+      "note": {
+        "en": "A model pretrained on 5 MW turbine simulations was transferred to 15 MW turbines. With 40% of the target-domain data, it matched an XGBoost baseline trained on 80%.",
+        "zh": "将 5 MW 风机仿真数据上预训练的模型迁移至 15 MW 机组，使用 40% 的目标域数据，达到 XGBoost 用 80% 数据时的预测精度。"
+      },
       "venue": "Ocean Engineering",
       "role": "first",
       "authors": "Hailong Qu, Tianzhen Wei, Guoqing Huang, et al.",
@@ -87,19 +135,36 @@
           "DOI",
           "https://doi.org/10.1016/j.oceaneng.2026.126286"
         ]
-      ]
-    },
-    {
-      "id": "indoor",
-      "field": "environment",
-      "status": "accepted",
-      "title": "Probabilistic Short-Term Forecasting of Spatially Heterogeneous Indoor CO₂ Fields with Graph-Spectral Increment Diffusion",
-      "note": "We model short-term changes in indoor CO₂ with graph-spectral increment diffusion to forecast concentration distributions across different locations.",
-      "venue": "Building and Environment",
-      "role": "first",
-      "authors": "Hailong Qu, et al.",
-      "top": true,
-      "links": []
+      ],
+      "figures": [
+        {
+          "file": "offshore-fig2.webp",
+          "number": "2",
+          "width": 1560,
+          "height": 457,
+          "caption": {
+            "en": "A network pretrained on 5 MW wind turbine simulations is fine-tuned on data from a 15 MW turbine.",
+            "zh": "用 5 MW 风机的仿真数据预训练网络，再用 15 MW 机组的数据微调。"
+          },
+          "source": "https://doi.org/10.1016/j.oceaneng.2026.126286",
+          "credit": "Qu et al. · Ocean Engineering (2026)",
+          "license": ""
+        },
+        {
+          "file": "offshore-fig8.webp",
+          "number": "8",
+          "width": 1560,
+          "height": 1024,
+          "caption": {
+            "en": "Predicted and simulated power and fatigue loads for the 15 MW target turbine. Blue points are training cases and red points are test cases.",
+            "zh": "15 MW 目标风机的功率与疲劳载荷预测值和仿真值对照。蓝点为训练工况，红点为测试工况。"
+          },
+          "source": "https://doi.org/10.1016/j.oceaneng.2026.126286",
+          "credit": "Qu et al. · Ocean Engineering (2026)",
+          "license": ""
+        }
+      ],
+      "zh_title": "基于跨尺度迁移学习的偏航大型海上风机功率与疲劳载荷预测"
     },
     {
       "id": "bond",
@@ -107,7 +172,10 @@
       "status": "published",
       "year": 2025,
       "title": "A machine learning model based on GAN-ANN data augmentation for predicting the bond strength of FRP-reinforced concrete under high-temperature conditions",
-      "note": "We augmented high-temperature pull-out test data using a GAN, compared six regression models and used SHAP to interpret bond-strength predictions.",
+      "note": {
+        "en": "We augmented high-temperature pull-out test data using a GAN, compared six regression models and used SHAP to interpret bond-strength predictions.",
+        "zh": "用生成对抗网络扩充高温拉拔试验数据，比较六种回归模型，并用 SHAP 解释纤维增强复合材料筋与混凝土的黏结强度预测。"
+      },
       "venue": "Composite Structures",
       "role": "first",
       "authors": "Hailong Qu, Tianyu Hu, Jiting Qu, Woubishet Zewdu Taffese.",
@@ -118,7 +186,23 @@
           "DOI",
           "https://doi.org/10.1016/j.compstruct.2025.119321"
         ]
-      ]
+      ],
+      "figures": [
+        {
+          "file": "bond-fig16.webp",
+          "number": "16",
+          "width": 1558,
+          "height": 1580,
+          "caption": {
+            "en": "Test-set RMSE and R² for six bond-strength models after adding 30% synthetic data generated using GAN–ANN, KDE or TGAN.",
+            "zh": "用 GAN–ANN、核密度估计或 TGAN 增加 30% 合成样本，比较六种黏结强度模型在真实测试集上的 RMSE 与 R²。"
+          },
+          "source": "https://doi.org/10.1016/j.compstruct.2025.119321",
+          "credit": "Qu et al. · Composite Structures (2025)",
+          "license": ""
+        }
+      ],
+      "zh_title": "基于 GAN–ANN 数据增强的高温下 FRP 筋与混凝土黏结强度预测"
     },
     {
       "id": "uhpc",
@@ -126,7 +210,10 @@
       "status": "published",
       "year": 2025,
       "title": "Prestressed UHPC Beam Flexural Capacity Prediction Improvement with Constraint-Guided Neural Networks",
-      "note": "Geometric, reinforcement and material-strength constraints guide a neural network that predicts the flexural capacity of prestressed ultra-high-performance concrete beams.",
+      "note": {
+        "en": "Geometric, reinforcement and material-strength constraints guide a neural network that predicts the flexural capacity of prestressed ultra-high-performance concrete beams.",
+        "zh": "将几何关系、配筋与材料强度约束引入神经网络，预测预应力超高性能混凝土梁的抗弯承载力。"
+      },
       "venue": "International Journal of Bridge Engineering, Management and Research",
       "role": "first",
       "authors": "Hailong Qu, Le Teng, Yanping Zhu, Zhongke Qu, Hantao Wu.",
@@ -136,7 +223,23 @@
           "DOI",
           "https://doi.org/10.70465/ber.v2i3.31"
         ]
-      ]
+      ],
+      "figures": [
+        {
+          "file": "uhpc-fig7.webp",
+          "number": "7",
+          "width": 2032,
+          "height": 908,
+          "caption": {
+            "en": "Mean relative training and test errors for seven combinations of physical constraints in prestressed UHPC beam capacity prediction.",
+            "zh": "七种物理约束组合下，预应力 UHPC 梁抗弯承载力预测的训练与测试平均相对误差。"
+          },
+          "source": "https://ijbemr.org/index.php/ber/article/view/31",
+          "credit": "© 2025 Hailong Qu, Le Teng, Yanping Zhu, Zhongke Qu and Hantao Wu · CC BY-NC-ND 4.0",
+          "license": "https://creativecommons.org/licenses/by-nc-nd/4.0/"
+        }
+      ],
+      "zh_title": "用约束引导神经网络改进预应力 UHPC 梁抗弯承载力预测"
     }
   ],
   "projects": [
@@ -144,9 +247,18 @@
       "name": "EngiWorld",
       "paper": "engiworld",
       "image": "engiworld.webp",
-      "category": "Engineering software",
-      "description": "We built 1,301 tasks across 26 professional applications to test whether agents can produce engineering files that meet the task requirements.",
-      "alt": "Technical drawing of a rectangular tube sheet with staggered holes, from an EngiWorld CAD task",
+      "category": {
+        "en": "Engineering software",
+        "zh": "工程软件"
+      },
+      "description": {
+        "en": "We built 1,301 tasks across 26 professional applications to test whether agents can produce engineering files that meet the task requirements.",
+        "zh": "在 26 款专业软件中设计 1,301 项任务，检验智能体交付的工程文件能否满足设计要求。"
+      },
+      "alt": {
+        "en": "Technical drawing of a rectangular tube sheet with staggered holes, from an EngiWorld CAD task",
+        "zh": "EngiWorld 管板 CAD 任务示意图，矩形板面上有交错的圆孔。"
+      },
       "links": [
         [
           "Project",
@@ -162,9 +274,18 @@
       "name": "SpatialWorld",
       "paper": "spatialworld",
       "image": "spatialworld.webp",
-      "category": "Multimodal agents",
-      "description": "Across 760 interactive tasks, agents use first-person views to explore unfamiliar environments, navigate and manipulate objects.",
-      "alt": "Overhead CARLA map and a first-person driving view from the same SpatialWorld navigation task",
+      "category": {
+        "en": "Multimodal agents",
+        "zh": "多模态智能体"
+      },
+      "description": {
+        "en": "Across 760 interactive tasks, agents use first-person views to explore unfamiliar environments, navigate and manipulate objects.",
+        "zh": "760 项交互任务检验智能体能否凭第一人称画面探索陌生环境、导航并操作物体。"
+      },
+      "alt": {
+        "en": "Overhead CARLA map and a first-person driving view from the same SpatialWorld navigation task",
+        "zh": "SpatialWorld 的 CARLA 导航任务，同一场景的俯视图与第一人称道路视图。"
+      },
       "links": [
         [
           "Paper",
@@ -181,25 +302,42 @@
     {
       "year": "2025",
       "end": null,
-      "institution": "Chongqing University",
-      "degree": "PhD student in Civil Engineering"
+      "institution": {
+        "en": "Chongqing University",
+        "zh": "重庆大学"
+      },
+      "degree": {
+        "en": "PhD student in Civil Engineering",
+        "zh": "土木工程博士研究生"
+      }
     },
     {
       "year": "2022",
       "end": "2025",
-      "institution": "Dalian University of Technology",
-      "degree": "Master’s in Civil Engineering"
+      "institution": {
+        "en": "Dalian University of Technology",
+        "zh": "大连理工大学"
+      },
+      "degree": {
+        "en": "Master’s in Civil Engineering",
+        "zh": "土木工程硕士"
+      }
     },
     {
       "year": "2018",
       "end": "2022",
-      "institution": "China University of Mining and Technology",
-      "degree": "Bachelor’s in Civil Engineering"
+      "institution": {
+        "en": "China University of Mining and Technology",
+        "zh": "中国矿业大学"
+      },
+      "degree": {
+        "en": "Bachelor’s in Civil Engineering",
+        "zh": "土木工程学士"
+      }
     }
   ],
   "report": "https://zhiman.cn/research/micius/Micius-Flash-Preview-Technical-Report.pdf",
   "credits": {
-    "wind": "https://commons.wikimedia.org/wiki/File:Block_Island_Wind_Farm_3.jpg",
     "cad": "https://github.com/Hongcheng-Gao/EngiWorld/blob/main/task/single-software-execution/gui/autocad/task-06/task-06.json",
     "spatial": "https://arxiv.org/html/2606.09669v2#A5.T8",
     "license": "https://creativecommons.org/licenses/by/4.0/",
