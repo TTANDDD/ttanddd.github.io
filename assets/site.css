@@ -198,6 +198,7 @@ h2{font:400 clamp(38px,4vw,56px)/1.06 var(--serif);letter-spacing:-.032em}
 .cover-brand { font-size: 15px; font-weight: 600; letter-spacing: -.025em; }
 .language { display:inline-flex; align-items:center; justify-content:center; padding:4px 8px; border-radius:3px; font-size:13px; font-weight:550; }
 .language:hover { background:var(--panel); }
+#language-notice { position:fixed; z-index:15; top:14px; left:50%; transform:translateX(-50%); padding:8px 14px; border:1px solid var(--border); border-radius:4px; background:var(--paper); color:var(--ink); font-size:13px; }
 .cover-rail .language { min-width:60px; padding:5px 12px; border:1px solid #718691; border-radius:100px; color:#e6eff0; }
 .cover-rail .language:hover { background:#234154; border-color:#bad5da; }
 .cover-core {

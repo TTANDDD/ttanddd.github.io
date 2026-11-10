@@ -36,7 +36,7 @@ def links(items, t):
 
 def language_link(locale):
     t = LABELS[locale]
-    target = "./zh/" if locale == "en" else "../"
+    target = "/zh/" if locale == "en" else "/"
     return (f'<a class="language" data-language href="{target}" lang="{t["otherLang"]}" '
             f'hreflang="{t["otherLang"]}" aria-label="{h(t["switch"])}">{h(t["other"])}</a>')
 
@@ -48,7 +48,7 @@ def navigation(t):
 def project_card(project, locale, base):
     t = LABELS[locale]
     name = h(project["name"])
-    return f"""<article class="project-card">
+    return f"""<article class="project-card" id="project-{h(project['paper'])}">
       <a class="project-art" href="{h(project['links'][0][1])}" target="_blank" rel="noopener noreferrer" aria-label="{name} · {h(t['project'])}">
         <img src="{base}assets/media/{h(project['image'])}" alt="{h(project['alt'][locale])}" width="840" height="500" loading="lazy" decoding="async">
       </a>
@@ -72,7 +72,8 @@ def paper_figure(figure, locale, base):
         crop = (f' style="--image-width:{100 * width / view_width:.6f}%;'
                 f'--image-left:{-100 * x / view_width:.6f}%;--image-top:{-100 * y / view_height:.6f}%;"')
     classes = "paper-figure figure-primary" if figure.get("layout") == "primary" else "paper-figure"
-    content = f"""<figure class="{classes}" style="--figure-ratio:{ratio:.8f}">
+    figure_id = h(Path(figure["file"]).stem)
+    content = f"""<figure id="figure-{figure_id}" class="{classes}" style="--figure-ratio:{ratio:.8f}">
         <a class="figure-open" href="{url}" data-figure data-credit="{h(figure['credit'])}" data-license="{h(figure['license'])}" aria-label="{h(t['zoom'])} · {h(number)} · {h(caption)}">
           <span class="figure-mat"><span class="figure-frame"{crop}>
             <img src="{url}" alt="{h(caption)}" width="{width}" height="{height}" loading="lazy" decoding="async">
@@ -83,7 +84,7 @@ def paper_figure(figure, locale, base):
           {external(t['source'],figure['source'],'figure-source')}</figcaption>
       </figure>"""
     if figure.get("layout") == "disclosure":
-        return f'<details class="extra-figure"><summary>{h(t["experiment"])} · {h(number)}</summary>{content}</details>'
+        return f'<details class="extra-figure" id="detail-{figure_id}"><summary>{h(t["experiment"])} · {h(number)}</summary>{content}</details>'
     return content
 
 
@@ -166,7 +167,8 @@ def image_credits(t):
 
 def render(locale):
     t = LABELS[locale]
-    base, path = ("./", "/") if locale == "en" else ("../", "/zh/")
+    base = "/"
+    path = "/" if locale == "en" else "/zh/"
     lang = t["lang"]
     name, email = h(t["name"]), h(PERSON["email"])
     title = name + (" · Chongqing University" if locale == "en" else " · 重庆大学")
@@ -182,10 +184,11 @@ def render(locale):
   <meta name="theme-color" content="#101c29"><link rel="icon" type="image/jpeg" href="{avatar}">
   <link rel="preload" href="{base}assets/fonts/serif-regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="{base}assets/fonts/sans-regular.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="{base}assets/site.css"><script defer src="{base}assets/site.js"></script><script defer src="{base}assets/cover.js"></script>
+  <link rel="stylesheet" href="{base}assets/site.css"><script defer src="{base}assets/site.js"></script><script defer src="{base}assets/cover.js"></script><script defer src="{base}assets/language.js"></script>
 </head>
 <body>
 <a class="skip" href="#about">{h(t['skip'])}</a>
+<p id="language-notice" role="status" hidden></p>
 <header class="cover" id="home" aria-labelledby="name">
   <canvas class="flow" aria-hidden="true"></canvas>
   <div class="cover-rail"><a href="#home" class="cover-brand">{name}</a>{language_link(locale)}</div>
@@ -223,8 +226,8 @@ def render(locale):
   </section>
   <section id="education" aria-labelledby="edu-title"><h2 id="edu-title">{h(t['edu'])}</h2><ol class="degrees">{education(locale)}</ol></section>
 </div></div></main>
-<footer class="footer shell"><div class="footer-top"><span>© 2026 {name}</span><a href="#home">{h(t['back'])} ↑</a></div>
-  <details class="credits"><summary>{h(t['credits'])}</summary><ul>{image_credits(t)}</ul></details>
+<footer class="footer shell" id="footer"><div class="footer-top"><span>© 2026 {name}</span><a href="#home">{h(t['back'])} ↑</a></div>
+  <details class="credits" id="image-credits"><summary>{h(t['credits'])}</summary><ul>{image_credits(t)}</ul></details>
 </footer>
 <dialog class="figure-viewer" aria-labelledby="viewer-title">
   <div class="viewer-top"><strong id="viewer-title"></strong><button type="button" data-close>{h(t['close'])} <span aria-hidden="true">×</span></button></div>
