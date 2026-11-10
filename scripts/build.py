@@ -54,11 +54,13 @@ def navigation(t):
 def project_card(project, locale, base):
     t = LABELS[locale]
     name = h(project["name"])
+    artwork = project["image"]
+    link_label, link_url = project["links"][0]
     return f"""<article class="project-card" id="project-{h(project['paper'])}">
-      <a class="project-art" href="{h(project['links'][0][1])}" target="_blank" rel="noopener noreferrer" aria-label="{name} · {h(t['project'])}">
-        <img src="{base}assets/media/{h(project['image'])}" alt="{h(project['alt'][locale])}" width="840" height="500" loading="lazy" decoding="async">
+      <a class="project-art" href="{h(link_url)}" target="_blank" rel="noopener noreferrer" aria-label="{name} · {h(t[LINK_LABELS[link_label]])}">
+        <img src="{base}assets/media/{h(artwork['file'])}" alt="{h(artwork['alt'][locale])}" width="{artwork['width']}" height="{artwork['height']}" loading="lazy" decoding="async">
       </a>
-      <div class="project-body"><p class="project-field">{h(project['category'][locale])}</p>
+      <div class="project-body"><p class="project-field">{h(project['category'][locale])} · {h(artwork['caption'][locale])}</p>
         <h3>{name}</h3><p class="project-note">{h(project['description'][locale])}</p>{links(project['links'],t)}
       </div></article>"""
 
@@ -160,14 +162,14 @@ def education(locale):
     return "".join(items)
 
 
-def image_credits(t):
-    urls = DATA["credits"]
-    items = [
-        h(t["avatarCredit"]) + " " + external(t["stats"],PERSON["scholar"]),
-        h(t["cadCredit"]) + " " + external(t["spec"], urls["cad"]),
-        h(t["spatialCredit"]) + " " + " ".join([external(t["table"],urls["spatial"]),external("CC BY 4.0",urls["license"]),external(t["carla"],urls["carla"])]),
-        h(t["figCreditNote"]),
-    ]
+def image_credits(locale):
+    t = LABELS[locale]
+    items = [h(t["avatarCredit"]) + " " + external(t["stats"], PERSON["scholar"])]
+    for project in DATA["projects"]:
+        artwork = project["image"]
+        sources = " ".join(external(source["label"][locale], source["url"]) for source in artwork["sources"])
+        items.append(h(artwork["credit"][locale]) + " " + sources)
+    items.append(h(t["figCreditNote"]))
     return "".join(f"<li>{item}</li>" for item in items)
 
 
@@ -233,7 +235,7 @@ def render(locale):
   <section id="education" aria-labelledby="edu-title"><h2 id="edu-title">{h(t['edu'])}</h2><ol class="degrees">{education(locale)}</ol></section>
 </div></div></main>
 <footer class="footer shell" id="footer"><div class="footer-top"><span>© 2026 {name}</span><a href="#home">{h(t['back'])} ↑</a></div>
-  <details class="credits" id="image-credits"><summary>{h(t['credits'])}</summary><ul>{image_credits(t)}</ul></details>
+  <details class="credits" id="image-credits"><summary>{h(t['credits'])}</summary><ul>{image_credits(locale)}</ul></details>
 </footer>
 <dialog class="figure-viewer" aria-labelledby="viewer-title">
   <div class="viewer-top"><strong id="viewer-title"></strong><button type="button" data-close>{h(t['close'])} <span aria-hidden="true">×</span></button></div>

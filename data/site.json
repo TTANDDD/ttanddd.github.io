@@ -264,7 +264,39 @@
     {
       "name": "EngiWorld",
       "paper": "engiworld",
-      "image": "engiworld.webp",
+      "image": {
+        "file": "engiworld-cylinder-wake.webp",
+        "width": 1450,
+        "height": 840,
+        "caption": {
+          "en": "OpenFOAM cylinder wake",
+          "zh": "OpenFOAM 圆柱绕流"
+        },
+        "alt": {
+          "en": "Alternating teal and amber vortices form downstream of a cylinder in EngiWorld’s OpenFOAM reference solution.",
+          "zh": "EngiWorld 的 OpenFOAM 参考流场中，圆柱下游交替出现青色和橙色涡旋。"
+        },
+        "credit": {
+          "en": "EngiWorld Authors (2026). The cylinder wake was rendered from the public OpenFOAM reference velocity field at Re = 100 and t = 20 s. Teal and amber show opposite signs of vorticity.",
+          "zh": "EngiWorld 团队（2026）。圆柱尾流图由公开的 OpenFOAM 参考速度场计算绘制，工况为 Re = 100、t = 20 s。青色和橙色表示方向相反的涡量。"
+        },
+        "sources": [
+          {
+            "label": {
+              "en": "Reference field",
+              "zh": "参考流场"
+            },
+            "url": "https://github.com/Hongcheng-Gao/EngiWorld/tree/cab0914a777ce2c2dd9d087302da5c93e0c3e5c7/task/single-software-execution/cli/openfoam/task-07/ground_truth/cylinder/20"
+          },
+          {
+            "label": {
+              "en": "MIT license",
+              "zh": "MIT 许可"
+            },
+            "url": "https://github.com/Hongcheng-Gao/EngiWorld/blob/cab0914a777ce2c2dd9d087302da5c93e0c3e5c7/LICENSE"
+          }
+        ]
+      },
       "category": {
         "en": "Engineering software",
         "zh": "工程软件"
@@ -272,10 +304,6 @@
       "description": {
         "en": "We built 1,301 tasks across 26 professional applications to test whether agents can produce engineering files that meet the task requirements.",
         "zh": "在 26 款专业软件中设计 1,301 项任务，检验智能体交付的工程文件能否满足设计要求。"
-      },
-      "alt": {
-        "en": "Technical drawing of a rectangular tube sheet with staggered holes, from an EngiWorld CAD task",
-        "zh": "EngiWorld 管板 CAD 任务示意图，矩形板面上有交错的圆孔。"
       },
       "links": [
         [
@@ -291,7 +319,46 @@
     {
       "name": "SpatialWorld",
       "paper": "spatialworld",
-      "image": "spatialworld.webp",
+      "image": {
+        "file": "spatialworld-maze23-reference.webp",
+        "width": 1450,
+        "height": 840,
+        "caption": {
+          "en": "Maze3D reference route",
+          "zh": "Maze3D 双层迷宫路线"
+        },
+        "alt": {
+          "en": "Exploded view of SpatialWorld’s two-floor Maze3D level 23. An orange route crosses the upper floor and returns to the goal below. Dashed lines join the stairs.",
+          "zh": "SpatialWorld 双层迷宫第 23 关的分解视图。橙色参考路线经上层绕行后回到底层终点，虚线连接对应楼梯。"
+        },
+        "credit": {
+          "en": "SpatialWorld, Hongcheng Gao, Hailong Qu et al. (2026). The two floors of Maze3D Pro level 23 are shown apart. The orange path follows the 18 published reference actions. Dashed lines connect the same stair cells on each floor.",
+          "zh": "SpatialWorld，Gao、Qu 等（2026）。图中分开展示 Maze3D Pro 第 23 关的两层布局。橙线按公开的 18 条参考动作绘制，虚线连接上下层相同位置的楼梯。"
+        },
+        "sources": [
+          {
+            "label": {
+              "en": "Level layout",
+              "zh": "关卡布局"
+            },
+            "url": "https://github.com/Hongcheng-Gao/SpatialWorld/blob/f47b1e091985a7f141db8d93c6822b42663cc1da/data/game/maze3d_pro_merge/Level_23.txt"
+          },
+          {
+            "label": {
+              "en": "Reference actions",
+              "zh": "参考动作"
+            },
+            "url": "https://github.com/Hongcheng-Gao/SpatialWorld/blob/f47b1e091985a7f141db8d93c6822b42663cc1da/data/game/game_gt.csv#L64"
+          },
+          {
+            "label": {
+              "en": "Dataset and license",
+              "zh": "数据集与许可"
+            },
+            "url": "https://huggingface.co/datasets/HongchengGao/SpatialWorld"
+          }
+        ]
+      },
       "category": {
         "en": "Multimodal agents",
         "zh": "多模态智能体"
@@ -299,10 +366,6 @@
       "description": {
         "en": "Across 760 interactive tasks, agents use first-person views to explore unfamiliar environments, navigate and manipulate objects.",
         "zh": "760 项交互任务检验智能体能否凭第一人称画面探索陌生环境、导航并操作物体。"
-      },
-      "alt": {
-        "en": "Overhead CARLA map and a first-person driving view from the same SpatialWorld navigation task",
-        "zh": "SpatialWorld 的 CARLA 导航任务，同一场景的俯视图与第一人称道路视图。"
       },
       "links": [
         [
@@ -354,11 +417,5 @@
       }
     }
   ],
-  "report": "https://zhiman.cn/research/micius/Micius-Flash-Preview-Technical-Report.pdf",
-  "credits": {
-    "cad": "https://github.com/Hongcheng-Gao/EngiWorld/blob/main/task/single-software-execution/gui/autocad/task-06/task-06.json",
-    "spatial": "https://arxiv.org/html/2606.09669v2#A5.T8",
-    "license": "https://creativecommons.org/licenses/by/4.0/",
-    "carla": "https://github.com/carla-simulator/carla#licenses"
-  }
+  "report": "https://zhiman.cn/research/micius/Micius-Flash-Preview-Technical-Report.pdf"
 }
