@@ -62,12 +62,24 @@ def paper_figure(figure, locale, base):
     number = t["figure"].format(n=figure["number"])
     caption = figure["caption"][locale]
     url = f'{base}assets/media/papers/{h(figure["file"])}'
+    width, height = figure["width"], figure["height"]
+    x, y, view_width, view_height = figure.get("view_box", (0, 0, width, height))
+    if not (0 <= x < x + view_width <= width and 0 <= y < y + view_height <= height):
+        raise ValueError(f'Figure view box lies outside {figure["file"]}')
+    ratio = view_width / view_height
+    crop = ""
+    if "view_box" in figure:
+        crop = (f' style="--image-width:{100 * width / view_width:.6f}%;'
+                f'--image-left:{-100 * x / view_width:.6f}%;--image-top:{-100 * y / view_height:.6f}%;"')
     classes = "paper-figure figure-primary" if figure.get("layout") == "primary" else "paper-figure"
-    content = f"""<figure class="{classes}">
+    content = f"""<figure class="{classes}" style="--figure-ratio:{ratio:.8f}">
         <a class="figure-open" href="{url}" data-figure data-credit="{h(figure['credit'])}" data-license="{h(figure['license'])}" aria-label="{h(t['zoom'])} · {h(number)} · {h(caption)}">
-          <img src="{url}" alt="{h(caption)}" width="{figure['width']}" height="{figure['height']}" loading="lazy" decoding="async"><span class="zoom-corner" aria-hidden="true">⤢</span>
+          <span class="figure-mat"><span class="figure-frame"{crop}>
+            <img src="{url}" alt="{h(caption)}" width="{width}" height="{height}" loading="lazy" decoding="async">
+          </span></span>
+          <span class="figure-label"><span class="figure-number">{h(number)}</span><span aria-hidden="true">⤢</span></span>
         </a>
-        <figcaption><span class="figure-number">{h(number)}</span><span class="figure-caption">{h(caption)}</span>
+        <figcaption><span class="figure-caption">{h(caption)}</span>
           {external(t['source'],figure['source'],'figure-source')}</figcaption>
       </figure>"""
     if figure.get("layout") == "disclosure":
@@ -159,7 +171,6 @@ def render(locale):
     name, email = h(t["name"]), h(PERSON["email"])
     title = name + (" · Chongqing University" if locale == "en" else " · 重庆大学")
     avatar = base + "assets/media/" + PERSON["avatar"]
-    cv = base + ("assets/Hailong-Qu-CV.pdf" if locale=="en" else "assets/Hailong-Qu-CV-zh.pdf")
     return f"""<!doctype html>
 <html lang="{lang}">
 <head>
@@ -184,7 +195,7 @@ def render(locale):
     <p class="cover-focus">{h(t['focus'])}<i></i>{h(t['agents'])}<i></i>{h(t['wind'])}</p>
     <div class="cover-actions"><a class="enter" href="#about">{h(t['enter'])}<span aria-hidden="true">↓</span></a><a href="#publications">{h(t['pubs'])}<span aria-hidden="true">↘</span></a></div>
   </div>
-  <div class="cover-foot"><div class="cover-socials">{external(t['stats'],PERSON['scholar'])}{external('GitHub',PERSON['github'])}<a href="mailto:{email}">{h(t['mail'])}</a>{external(t['cv'],cv)}</div></div>
+  <div class="cover-foot"><div class="cover-socials">{external(t['stats'],PERSON['scholar'])}{external('GitHub',PERSON['github'])}<a href="mailto:{email}">{h(t['mail'])}</a></div></div>
 </header>
 <div class="topbar"><div class="shell top-inner">
   <a class="brand" href="#home" aria-label="{h(t['home'])}"><span class="brand-name">{name}</span></a>
@@ -217,7 +228,7 @@ def render(locale):
 </footer>
 <dialog class="figure-viewer" aria-labelledby="viewer-title">
   <div class="viewer-top"><strong id="viewer-title"></strong><button type="button" data-close>{h(t['close'])} <span aria-hidden="true">×</span></button></div>
-  <div class="viewer-image"><img alt=""></div>
+  <div class="viewer-image figure-mat"></div>
   <p class="viewer-caption"></p><p class="viewer-credit" aria-label="{h(t['attribution'])}"></p>
   <div class="viewer-links"><a data-full target="_blank" rel="noopener">{h(t['full'])} ↗</a><a data-source target="_blank" rel="noopener noreferrer">{h(t['source'])} ↗</a></div>
 </dialog>

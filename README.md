@@ -8,4 +8,4 @@ The Google Scholar workflow runs daily at 00:17 UTC (08:17 in China). It reads t
 
 A local fallback can run `python scripts/refresh_if_stale.py` from a machine with repository write access. It checks the date of the public snapshot before contacting Scholar, works in a temporary clone when needed, and verifies the resulting public update.
 
-GitHub Pages serves the root of the main branch. Website downloads are the public editions of the CV. Image credits appear alongside the figures and in the footer. Font licenses are in `assets/fonts/`.
+GitHub Pages serves the root of the main branch. Image credits appear alongside the figures and in the footer. Font licenses are in `assets/fonts/`.

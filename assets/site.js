@@ -116,7 +116,7 @@
 
   const viewer = document.querySelector(".figure-viewer");
   if (typeof viewer.showModal !== "function") return;
-  const largeImage = viewer.querySelector(".viewer-image img");
+  const viewerImage = viewer.querySelector(".viewer-image");
   const closeButton = viewer.querySelector("[data-close]");
   let opener;
   for (const link of document.querySelectorAll("[data-figure]")) {
@@ -127,8 +127,10 @@
       const figure = link.closest("figure");
       const caption = figure.querySelector(".figure-caption").textContent;
       viewer.querySelector("#viewer-title").textContent = figure.querySelector(".figure-number").textContent;
-      largeImage.alt = caption;
-      largeImage.src = link.href;
+      const frame = link.querySelector(".figure-frame").cloneNode(true);
+      frame.querySelector("img").loading = "eager";
+      viewer.style.setProperty("--figure-ratio", figure.style.getPropertyValue("--figure-ratio"));
+      viewerImage.replaceChildren(frame);
       viewer.querySelector(".viewer-caption").textContent = caption;
       const credit = viewer.querySelector(".viewer-credit");
       credit.textContent = link.dataset.credit;
@@ -153,7 +155,7 @@
     if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) viewer.close();
   });
   viewer.addEventListener("close", () => {
-    largeImage.removeAttribute("src");
+    viewerImage.replaceChildren();
     opener?.focus({preventScroll:true});
   });
 })();

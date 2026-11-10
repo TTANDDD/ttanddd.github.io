@@ -104,6 +104,7 @@
           "number": "1",
           "width": 1600,
           "height": 1241,
+          "view_box": [34, 40, 1534, 1121],
           "caption": {
             "en": "Agents use first-person observations to act in indoor, street and game environments. The benchmark checks their final state and the number of actions taken.",
             "zh": "智能体根据第一人称观测在室内、街道和游戏环境中行动。基准检查任务终态，并对照参考轨迹评估执行步数。"
@@ -142,6 +143,7 @@
           "number": "2",
           "width": 1560,
           "height": 457,
+          "view_box": [0, 0, 1540, 457],
           "caption": {
             "en": "A network pretrained on 5 MW wind turbine simulations is fine-tuned on data from a 15 MW turbine.",
             "zh": "用 5 MW 风机的仿真数据预训练网络，再用 15 MW 机组的数据微调。"
@@ -155,6 +157,7 @@
           "number": "8",
           "width": 1560,
           "height": 1024,
+          "view_box": [10, 4, 1540, 1010],
           "caption": {
             "en": "Predicted and simulated power and fatigue loads for the 15 MW target turbine. Blue points are training cases and red points are test cases.",
             "zh": "15 MW 目标风机的功率与疲劳载荷预测值和仿真值对照。蓝点为训练工况，红点为测试工况。"
