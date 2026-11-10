@@ -273,6 +273,7 @@ h2{font:400 clamp(38px,4vw,56px)/1.06 var(--serif);letter-spacing:-.032em}
 .paper-figure figcaption { margin-top:2px; font-size:12px; line-height:1.47; color:var(--muted); }
 .figure-caption { margin-right:5px; }
 .figure-primary,.extra-figure { grid-column:1/-1; }
+.figure-primary { max-width:700px; }
 .extra-figure { padding-block:7px 2px; border-top:1px solid var(--border); max-width:700px; }
 .extra-figure summary { width:fit-content; cursor:pointer; color:var(--accent); font-size:12.5px; font-weight:600; }
 .extra-figure[open] .paper-figure { margin-top:11px; }
