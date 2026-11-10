@@ -38,4 +38,13 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git commit -m "Refresh Google Scholar citation counts"
           git push origin HEAD:main
+          # Branch publishing can start a build on its own. Request one if it hasn't.
+          revision=$(git rev-parse HEAD)
+          for attempt in 1 2 3; do
+            built=$(gh api "repos/${GITHUB_REPOSITORY}/pages/builds/latest" --jq 'select(.status != "errored") | .commit' || true)
+            if [ "$built" = "$revision" ]; then
+              exit 0
+            fi
+            sleep 3
+          done
           gh api --method POST "repos/${GITHUB_REPOSITORY}/pages/builds" --silent
