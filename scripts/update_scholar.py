@@ -1,4 +1,4 @@
-"""Refresh verified Google Scholar counts for publications already listed on the site."""
+"""Refresh Scholar counts and discover verified public publications."""
 
 import argparse
 from datetime import datetime, timedelta, timezone
@@ -8,11 +8,14 @@ import os
 from pathlib import Path
 import re
 import tempfile
+import time
 import unicodedata
 from urllib.parse import parse_qs, urlencode, urlsplit
 from urllib.error import HTTPError
 from urllib.request import Request, urlopen
 from xml.etree.ElementTree import Element, SubElement
+
+from publication_watch import SCAN_VERSION, sync_publications
 
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -79,10 +82,32 @@ def query_field(href, key):
     return parse_qs(parts.query).get(key, [""])[0]
 
 
-def extract(html, site, previous, checked):
+def document_root(html):
     document = Document()
     document.feed(html)
-    root = document.root
+    return document.root
+
+
+def inventory(root, site):
+    profile_id = query_field(site["person"]["scholar"], "user")
+    records = []
+    for row in root.findall(".//*[@id='gsc_a_b']/tr"):
+        title = class_link(row, "gsc_a_at")
+        if title is None:
+            continue
+        work_id = query_field(title.get("href", ""), "citation_for_view")
+        if not re.fullmatch(re.escape(profile_id) + r":[A-Za-z0-9_-]+", work_id):
+            raise ValueError("Unexpected Scholar publication identifier.")
+        details = [text_of(node) for node in row.iter() if "gs_gray" in node.get("class", "").split()]
+        year = next((text_of(node) for node in row.iter()
+                     if "gsc_a_y" in node.get("class", "").split()), "")
+        records.append({"work_id": work_id, "title": text_of(title),
+                        "venue": details[1] if len(details) > 1 else "", "year": year})
+    return records
+
+
+def extract(html, site, previous, checked):
+    root = document_root(html) if isinstance(html, str) else html
     name = text_of(root.find(".//*[@id='gsc_prf_in']"))
     if normalize(name) != normalize(site["person"]["name"]):
         raise ValueError("Google Scholar did not return the requested author profile.")
@@ -115,10 +140,11 @@ def extract(html, site, previous, checked):
             raise ValueError("An indexed paper is missing its citation cell.")
         count = text_of(count_link)
         cluster = query_field(count_link.get("href", ""), "cites")
-        if key in observed:
-            raise ValueError("A curated title matched multiple Scholar records.")
-        observed[key] = {"work_id": work_id, "count": integer(count) if count else None,
-                         "cluster": cluster if cluster.isdigit() else None, "checked_at": checked}
+        value = {"work_id": work_id, "count": integer(count) if count else None,
+                 "cluster": cluster if cluster.isdigit() else None, "checked_at": checked}
+        # Preprint and journal records may coexist. Use one actual count, never their sum.
+        if key not in observed or (value["count"] or 0) > (observed[key]["count"] or 0):
+            observed[key] = value
     if not observed:
         raise ValueError("Google Scholar did not return any of the listed publications.")
     retained = {key: previous_papers[key] for key in by_title.values() if key in previous_papers}
@@ -151,6 +177,42 @@ def report(status, message):
         print(f"::warning title=Scholar refresh deferred::{message}")
 
 
+def read_profile(user):
+    root = None
+    for page in range(10):
+        query = {"user": user, "hl": "en", "pagesize": 100, "sortby": "pubdate"}
+        if page:
+            query["cstart"] = page * 100
+            time.sleep(3)
+        request = Request(URL + "?" + urlencode(query), headers={
+            "User-Agent": "Mozilla/5.0 (compatible; academic homepage citation check; +https://ttanddd.github.io/)",
+            "Accept-Language": "en-US,en;q=0.8",
+        })
+        with urlopen(request, timeout=30) as response:
+            if urlsplit(response.geturl()).hostname != "scholar.google.com":
+                raise ValueError("Google Scholar returned an unexpected destination.")
+            current = document_root(response.read().decode("utf-8"))
+        rows = current.findall(".//*[@id='gsc_a_b']/tr")
+        if root is None:
+            root = current
+        else:
+            if not rows:
+                raise ValueError("Google Scholar returned an incomplete publication page.")
+            root.find(".//*[@id='gsc_a_b']").extend(rows)
+        more = current.find(".//*[@id='gsc_bpf_more']")
+        if more is not None and "disabled" in more.attrib:
+            return root
+        if more is None and len(rows) < 100:
+            return root
+    raise ValueError("The Scholar inventory exceeded the pagination limit; snapshot unchanged.")
+
+
+def write_json(path, value):
+    with tempfile.NamedTemporaryFile(mode="w", encoding="utf-8", newline="\n", dir=path.parent, delete=False) as staged:
+        staged.write(json.dumps(value, ensure_ascii=False, indent=2) + "\n")
+    Path(staged.name).replace(path)
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--skip-if-current", action="store_true",
@@ -164,21 +226,17 @@ def main(argv=None):
     now = datetime.now(timezone.utc)
     checked = verified_at(previous, site)
     reusable = checked is not None and checked <= now
+    scan = previous.get("publication_scan", {})
     if (args.skip_if_current and reusable
-            and checked.astimezone(BEIJING).date() == now.astimezone(BEIJING).date()):
+            and checked.astimezone(BEIJING).date() == now.astimezone(BEIJING).date()
+            and scan.get("version") == SCAN_VERSION and scan.get("checked_at") == previous["checked_at"]):
         report("current", "Today's verified snapshot is already available "
-               f"({checked.isoformat()}). No Scholar request or website rebuild was needed.")
+               f"({checked.isoformat()}); citations and new-publication checks are included. "
+               "No Scholar request or website rebuild was needed.")
         return
     user = query_field(site["person"]["scholar"], "user")
-    request = Request(URL + "?" + urlencode({"user": user, "hl": "en", "pagesize": 100}), headers={
-        "User-Agent": "Mozilla/5.0 (compatible; academic homepage citation check; +https://ttanddd.github.io/)",
-        "Accept-Language": "en-US,en;q=0.8",
-    })
     try:
-        with urlopen(request, timeout=30) as response:
-            if urlsplit(response.geturl()).hostname != "scholar.google.com":
-                raise ValueError("Google Scholar returned an unexpected destination.")
-            html = response.read().decode("utf-8")
+        root = read_profile(user)
     except HTTPError as error:
         if not (args.defer_if_blocked and reusable and error.code in (403, 429)):
             raise
@@ -187,12 +245,26 @@ def main(argv=None):
                "verification date. The local scheduled fallback can retry if today's update is missing.")
         return
     checked = datetime.now(timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z")
-    result = extract(html, site, previous, checked)
-    with tempfile.NamedTemporaryFile(mode="w", encoding="utf-8", newline="\n", dir=DATA, delete=False) as staged:
-        staged.write(json.dumps(result, ensure_ascii=False, indent=2) + "\n")
-    Path(staged.name).replace(path)
+    extract(root, site, previous, checked)  # Validate author identity and totals before discovering new papers.
+    records = inventory(root, site)
+    updated_site, scan = sync_publications(records, site, previous, checked)
+    result = extract(root, updated_site, previous, checked)
+    for record in records:
+        value = next((v for v in result["papers"].values() if v["work_id"] == record["work_id"]), None)
+        if value is not None:
+            value.update({"listed_" + key: record[key] for key in ("title", "venue", "year")})
+    result["publication_scan"] = scan
+    if updated_site != site:
+        write_json(DATA / "site.json", updated_site)
+    write_json(path, result)
     report("refreshed", f"Verified {len(result['papers'])} listed papers. "
-           f"Profile citations: {result['citations']}. Checked {checked}.")
+           f"Profile citations: {result['citations']}. Checked {checked}. "
+           f"Scanned {scan['observed_count']} Scholar records; added {len(scan['added'])} public papers, "
+           f"updated {len(scan['updated'])}; {scan['unverified_count']} unverified candidates were not published. "
+           f"Public metadata checks: {scan['status']} ({scan['source_errors']} source errors).")
+    if scan["source_errors"] and os.environ.get("GITHUB_ACTIONS") == "true":
+        print("::warning title=Publication verification incomplete::Some public metadata sources were unavailable. "
+              "Only independently verified records were published; unresolved checks will be retried on the next daily run.")
 
 
 if __name__ == "__main__":

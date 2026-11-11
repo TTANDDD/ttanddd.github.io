@@ -23,7 +23,8 @@ def h(value):
 
 
 def versioned_asset(name):
-    digest = sha256((ROOT / "assets" / name).read_bytes()).hexdigest()[:12]
+    # Keep scheduled Windows and Linux builds consistent despite checkout line endings.
+    digest = sha256((ROOT / "assets" / name).read_bytes().replace(b"\r\n", b"\n")).hexdigest()[:12]
     return f"/assets/{name}?v={digest}"
 
 
@@ -100,13 +101,16 @@ def paper_entry(paper, locale, base):
     t = LABELS[locale]
     status = paper["status"]
     authors = h(paper["authors"]).replace("Hailong Qu", "<strong>Hailong Qu</strong>")
-    title = paper["title"] if locale == "en" else paper["zh_title"]
-    original = f'<p class="original-title" lang="en">{h(paper["title"])}</p>' if locale == "zh" else ""
+    title = paper["title"] if locale == "en" else paper.get("zh_title") or paper["title"]
+    original = f'<p class="original-title" lang="en">{h(paper["title"])}</p>' if locale == "zh" and paper.get("zh_title") else ""
     year = f'<time class="paper-year">{paper["year"]}</time>' if paper.get("year") else ""
     venue = f'<cite lang="en">{h(paper["venue"])}</cite>'
     if paper.get("citation"):
         venue += f'<span class="vol">, {h(paper["citation"])}</span>'
-    meta = [venue,h(t[paper["role"]]),h(t[status + "State"])]
+    meta = [venue]
+    if paper.get("role"):
+        meta.append(h(t[paper["role"]]))
+    meta.append(h(t[status + "State"]))
     if paper.get("top"):
         meta.append(f'<span class="rank" title="{h(t["tierHelp"])}">{h(t["tier"])}</span>')
     record = SCHOLAR["papers"].get(paper["id"], {})
@@ -117,12 +121,15 @@ def paper_entry(paper, locale, base):
             dest = PERSON["scholar"] + "&view_op=view_citation&citation_for_view=" + record["work_id"]
         meta.append(external(t["cited"].format(n=record["count"]), dest, "cited"))
     separator = '<span class="sep" aria-hidden="true">·</span>'
-    figures = "".join(paper_figure(fig,locale,base) for fig in paper["figures"])
+    figures = "".join(paper_figure(fig,locale,base) for fig in paper.get("figures", []))
+    figures = f'<div class="figure-grid">{figures}</div>' if figures else ""
+    note = paper.get("note", {}).get(locale, "")
+    note = f'<p class="paper-note">{h(note)}</p>' if note else ""
     return f"""<article class="paper" id="paper-{h(paper['id'])}" data-status="{h(status)}">
       <div class="paper-title"><h4>{h(title)}</h4>{year}</div>{original}
-      <p class="paper-note">{h(paper['note'][locale])}</p><p class="authors" lang="en">{authors}</p>
+      {note}<p class="authors" lang="en">{authors}</p>
       <p class="paper-meta">{separator.join(meta)}</p>{links(paper['links'],t)}
-      <div class="figure-grid">{figures}</div>
+      {figures}
     </article>"""
 
 

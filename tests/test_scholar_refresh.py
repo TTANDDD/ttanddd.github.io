@@ -6,6 +6,7 @@ import importlib.util
 import io
 import json
 from pathlib import Path
+import sys
 import tempfile
 import unittest
 from unittest.mock import MagicMock, patch
@@ -14,6 +15,7 @@ from urllib.error import HTTPError
 
 SPEC = importlib.util.spec_from_file_location(
     "scholar", Path(__file__).resolve().parents[1] / "scripts/update_scholar.py")
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 SCHOLAR = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(SCHOLAR)
 FLAGS = ["--skip-if-current", "--defer-if-blocked"]
@@ -44,7 +46,7 @@ class RefreshTests(unittest.TestCase):
         self.summary = self.folder / "summary"
         self.log = io.StringIO()
         self.site = {"person": {"name": "Test Researcher", "scholar": PROFILE},
-                     "papers": [{"id": "public", "title": "Public paper"}]}
+                     "fields": [], "papers": [{"id": "public", "title": "Public paper", "status": "published"}]}
         (self.folder / "site.json").write_text(json.dumps(self.site), encoding="utf-8")
         Clock.value = datetime(2026, 11, 11, 1, 0, tzinfo=timezone.utc)
         self.seed("2026-11-10T01:00:00Z")
@@ -64,7 +66,8 @@ class RefreshTests(unittest.TestCase):
 
     def seed(self, stamp, **changes):
         snapshot = {"profile": PROFILE, "checked_at": stamp,
-                    "citations": 55, "h_index": 3, "i10_index": 1, "papers": {}}
+                    "citations": 55, "h_index": 3, "i10_index": 1, "papers": {},
+                    "publication_scan": {"version": 1, "checked_at": stamp}}
         snapshot.update(changes)
         self.path.write_text(json.dumps(snapshot, indent=2) + "\n", encoding="utf-8")
         self.before = self.path.read_bytes()
@@ -83,6 +86,68 @@ class RefreshTests(unittest.TestCase):
         self.seed("2026-11-10T23:55:00Z")
         SCHOLAR.main(FLAGS)
         self.network.assert_not_called()
+
+    def test_counts_only_snapshot_does_not_skip_new_publication_scan(self):
+        self.seed("2026-11-11T00:30:00Z", publication_scan={})
+        SCHOLAR.main(FLAGS)
+        self.network.assert_called_once()
+        scan = json.loads(self.path.read_text())["publication_scan"]
+        self.assertEqual(1, scan["observed_count"])
+        self.assertEqual("complete", scan["status"])
+
+    def test_publication_inventory_follows_scholar_pagination(self):
+        first = HTML + b'<button id="gsc_bpf_more"></button>'
+        second = HTML.replace(b'fixture:paper', b'fixture:second') + b'<button id="gsc_bpf_more" disabled></button>'
+        responses = []
+        for content in (first, second):
+            response = MagicMock()
+            response.__enter__.return_value.geturl.return_value = SCHOLAR.URL
+            response.__enter__.return_value.read.return_value = content
+            responses.append(response)
+        self.network.side_effect = responses
+        with patch.object(SCHOLAR.time, "sleep"):
+            root = SCHOLAR.read_profile("fixture")
+        self.assertEqual(2, len(SCHOLAR.inventory(root, self.site)))
+        self.assertIn("cstart=100", self.network.call_args_list[1].args[0].full_url)
+
+    def test_duplicate_versions_keep_one_real_count_without_summing(self):
+        html = HTML.decode().replace('</tbody>', '''<tr><td><a class="gsc_a_at"
+          href="/citations?citation_for_view=fixture:journal">Public paper</a></td>
+          <td><a class="gsc_a_ac" href="/scholar?cites=456">4</a></td></tr></tbody>''')
+        result = SCHOLAR.extract(html, self.site, {}, "2026-11-11T01:00:00Z")
+        self.assertEqual(6, result["papers"]["public"]["count"])
+        self.assertEqual("123", result["papers"]["public"]["cluster"])
+
+    def test_verified_discovery_is_saved_with_its_citations(self):
+        title = "A new public medical imaging paper"
+        html = HTML.decode().replace('</tbody>', f'''<tr><td><a class="gsc_a_at"
+          href="/citations?citation_for_view=fixture:new">{title}</a></td>
+          <td><a class="gsc_a_ac" href="/scholar?cites=789">1</a></td></tr></tbody>''')
+        self.network.return_value.__enter__.return_value.read.return_value = html.encode()
+        metadata = {"title": title, "authors": ["Test Researcher"], "year": 2026,
+                    "status": "published", "venue": "Example Medical Journal", "citation": "12, 34",
+                    "doi": "10.1234/medical", "url": "https://doi.org/10.1234/medical", "source": "Crossref"}
+        with patch("publication_watch.public_record", return_value=(metadata, 0)):
+            SCHOLAR.main(FLAGS)
+        site = json.loads((self.folder / "site.json").read_text(encoding="utf-8"))
+        snapshot = json.loads(self.path.read_text())
+        self.assertEqual(2, len(site["papers"]))
+        added = snapshot["publication_scan"]["added"]
+        self.assertEqual(1, len(added))
+        self.assertEqual(1, snapshot["papers"][added[0]]["count"])
+
+    def test_unverified_discovery_does_not_leak_into_public_files(self):
+        secret_title = "A manuscript without a public article"
+        html = HTML.decode().replace('</tbody>', f'''<tr><td><a class="gsc_a_at"
+          href="/citations?citation_for_view=fixture:unreleased">{secret_title}</a></td>
+          <td><a class="gsc_a_ac"></a></td></tr></tbody>''')
+        self.network.return_value.__enter__.return_value.read.return_value = html.encode()
+        with patch("publication_watch.public_record", return_value=(None, 0)):
+            SCHOLAR.main(FLAGS)
+        for path in (self.path, self.folder / "site.json", self.summary):
+            self.assertNotIn(secret_title, path.read_text(encoding="utf-8"))
+        self.assertNotIn(secret_title, self.log.getvalue())
+        self.assertEqual(1, json.loads(self.path.read_text())["publication_scan"]["unverified_count"])
 
     def test_beijing_midnight_allows_new_verified_update(self):
         self.seed("2026-11-10T15:59:00Z")
