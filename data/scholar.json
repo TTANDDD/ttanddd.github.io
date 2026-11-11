@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-10T06:05:37Z",
+  "checked_at": "2026-11-11T01:23:17Z",
   "profile": "https://scholar.google.com/citations?user=_gNt3W8AAAAJ",
   "citations": 55,
   "h_index": 3,
@@ -9,31 +9,31 @@
       "work_id": "_gNt3W8AAAAJ:UeHWp8X0CEIC",
       "count": null,
       "cluster": null,
-      "checked_at": "2026-11-10T06:05:37Z"
+      "checked_at": "2026-11-11T01:23:17Z"
     },
     "spatialworld": {
       "work_id": "_gNt3W8AAAAJ:qjMakFHDy7sC",
       "count": 7,
       "cluster": "4801937270758037470",
-      "checked_at": "2026-11-10T06:05:37Z"
+      "checked_at": "2026-11-11T01:23:17Z"
     },
     "offshore": {
       "work_id": "_gNt3W8AAAAJ:2osOgNQ5qMEC",
       "count": 2,
       "cluster": "12525449123160872142",
-      "checked_at": "2026-11-10T06:05:37Z"
+      "checked_at": "2026-11-11T01:23:17Z"
     },
     "bond": {
       "work_id": "_gNt3W8AAAAJ:d1gkVwhDpl0C",
       "count": 40,
       "cluster": "12650329744078022624",
-      "checked_at": "2026-11-10T06:05:37Z"
+      "checked_at": "2026-11-11T01:23:17Z"
     },
     "uhpc": {
       "work_id": "_gNt3W8AAAAJ:9yKSN-GCB0IC",
       "count": 6,
       "cluster": "16965351680424235215",
-      "checked_at": "2026-11-10T06:05:37Z"
+      "checked_at": "2026-11-11T01:23:17Z"
     }
   }
 }
