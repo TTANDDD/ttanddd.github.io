@@ -18,14 +18,19 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 8
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7.0.1
         with:
           ref: main
+      - name: Verify refresh safeguards
+        run: python3 -B -m unittest discover -s tests -v
       - name: Read verified Scholar counts
-        run: python3 scripts/update_scholar.py
+        id: scholar
+        run: python3 scripts/update_scholar.py --skip-if-current --defer-if-blocked
       - name: Render both language editions
+        if: steps.scholar.outputs.status == 'refreshed'
         run: python3 scripts/build.py
       - name: Save the snapshot and request a Pages build
+        if: steps.scholar.outputs.status == 'refreshed'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |

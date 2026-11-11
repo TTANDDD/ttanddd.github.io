@@ -1,13 +1,16 @@
 """Refresh verified Google Scholar counts for publications already listed on the site."""
 
-from datetime import datetime, timezone
+import argparse
+from datetime import datetime, timedelta, timezone
 from html.parser import HTMLParser
 import json
+import os
 from pathlib import Path
 import re
 import tempfile
 import unicodedata
 from urllib.parse import parse_qs, urlencode, urlsplit
+from urllib.error import HTTPError
 from urllib.request import Request, urlopen
 from xml.etree.ElementTree import Element, SubElement
 
@@ -15,6 +18,7 @@ from xml.etree.ElementTree import Element, SubElement
 ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / "data"
 URL = "https://scholar.google.com/citations"
+BEIJING = timezone(timedelta(hours=8))
 VOID = set("area base br col embed hr img input link meta param source track wbr".split())
 
 
@@ -121,25 +125,74 @@ def extract(html, site, previous, checked):
     return {"checked_at": checked, "profile": site["person"]["scholar"], **totals, "papers": {**retained, **observed}}
 
 
-def main():
+def verified_at(snapshot, site):
+    """Only reuse an identified, dated snapshot with all three valid totals."""
+    if snapshot.get("profile") != site["person"]["scholar"]:
+        return None
+    if any(type(snapshot.get(key)) is not int or snapshot[key] < 0
+           for key in ("citations", "h_index", "i10_index")):
+        return None
+    try:
+        checked = datetime.fromisoformat(snapshot["checked_at"].replace("Z", "+00:00"))
+    except (KeyError, TypeError, ValueError, AttributeError):
+        return None
+    return checked if checked.tzinfo is not None else None
+
+
+def report(status, message):
+    print(message)
+    if os.environ.get("GITHUB_OUTPUT"):
+        with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as output:
+            output.write(f"status={status}\n")
+    if os.environ.get("GITHUB_STEP_SUMMARY"):
+        with open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf-8") as summary:
+            summary.write(f"### Google Scholar: {status}\n\n{message}\n")
+    if status == "deferred" and os.environ.get("GITHUB_ACTIONS") == "true":
+        print(f"::warning title=Scholar refresh deferred::{message}")
+
+
+def main(argv=None):
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--skip-if-current", action="store_true",
+                        help="Skip a verified snapshot from today in Asia/Shanghai.")
+    parser.add_argument("--defer-if-blocked", action="store_true",
+                        help="Report HTTP 403/429 as deferred when a verified snapshot exists.")
+    args = parser.parse_args(argv)
     site = json.loads((DATA / "site.json").read_text(encoding="utf-8"))
     path = DATA / "scholar.json"
     previous = json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}
+    now = datetime.now(timezone.utc)
+    checked = verified_at(previous, site)
+    reusable = checked is not None and checked <= now
+    if (args.skip_if_current and reusable
+            and checked.astimezone(BEIJING).date() == now.astimezone(BEIJING).date()):
+        report("current", "Today's verified snapshot is already available "
+               f"({checked.isoformat()}). No Scholar request or website rebuild was needed.")
+        return
     user = query_field(site["person"]["scholar"], "user")
     request = Request(URL + "?" + urlencode({"user": user, "hl": "en", "pagesize": 100}), headers={
         "User-Agent": "Mozilla/5.0 (compatible; academic homepage citation check; +https://ttanddd.github.io/)",
         "Accept-Language": "en-US,en;q=0.8",
     })
-    with urlopen(request, timeout=30) as response:
-        if urlsplit(response.geturl()).hostname != "scholar.google.com":
-            raise ValueError("Google Scholar returned an unexpected destination.")
-        html = response.read().decode("utf-8")
+    try:
+        with urlopen(request, timeout=30) as response:
+            if urlsplit(response.geturl()).hostname != "scholar.google.com":
+                raise ValueError("Google Scholar returned an unexpected destination.")
+            html = response.read().decode("utf-8")
+    except HTTPError as error:
+        if not (args.defer_if_blocked and reusable and error.code in (403, 429)):
+            raise
+        report("deferred", f"Google Scholar returned HTTP {error.code}; no new data was fetched. "
+               f"The verified snapshot from {checked.isoformat()} is unchanged, including its "
+               "verification date. The local scheduled fallback can retry if today's update is missing.")
+        return
     checked = datetime.now(timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z")
     result = extract(html, site, previous, checked)
     with tempfile.NamedTemporaryFile(mode="w", encoding="utf-8", newline="\n", dir=DATA, delete=False) as staged:
         staged.write(json.dumps(result, ensure_ascii=False, indent=2) + "\n")
     Path(staged.name).replace(path)
-    print(f"Verified {len(result['papers'])} listed papers. Profile citations: {result['citations']}. Checked {checked}.")
+    report("refreshed", f"Verified {len(result['papers'])} listed papers. "
+           f"Profile citations: {result['citations']}. Checked {checked}.")
 
 
 if __name__ == "__main__":
