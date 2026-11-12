@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-11T07:21:53Z",
+  "checked_at": "2026-11-12T01:17:10Z",
   "profile": "https://scholar.google.com/citations?user=_gNt3W8AAAAJ",
   "citations": 55,
   "h_index": 3,
@@ -9,7 +9,7 @@
       "work_id": "_gNt3W8AAAAJ:UeHWp8X0CEIC",
       "count": null,
       "cluster": null,
-      "checked_at": "2026-11-11T07:21:53Z",
+      "checked_at": "2026-11-12T01:17:10Z",
       "listed_title": "EngiWorld: What Can Frontier Agents Deliver in Professional Engineering Environments?",
       "listed_venue": "arXiv preprint arXiv:2609.37686, 2026",
       "listed_year": "2026"
@@ -18,7 +18,7 @@
       "work_id": "_gNt3W8AAAAJ:qjMakFHDy7sC",
       "count": 7,
       "cluster": "4801937270758037470",
-      "checked_at": "2026-11-11T07:21:53Z",
+      "checked_at": "2026-11-12T01:17:10Z",
       "listed_title": "SpatialWorld: Benchmarking Interactive Spatial Reasoning of Multimodal Agents in Real-World Tasks",
       "listed_venue": "arXiv preprint arXiv:2606.09669, 2026",
       "listed_year": "2026"
@@ -27,7 +27,7 @@
       "work_id": "_gNt3W8AAAAJ:2osOgNQ5qMEC",
       "count": 2,
       "cluster": "12525449123160872142",
-      "checked_at": "2026-11-11T07:21:53Z",
+      "checked_at": "2026-11-12T01:17:10Z",
       "listed_title": "Predicting power and fatigue loads of yawed large offshore wind turbine based on cross-scale transfer learning",
       "listed_venue": "Ocean Engineering 362, 126286, 2026",
       "listed_year": "2026"
@@ -36,7 +36,7 @@
       "work_id": "_gNt3W8AAAAJ:d1gkVwhDpl0C",
       "count": 40,
       "cluster": "12650329744078022624",
-      "checked_at": "2026-11-11T07:21:53Z",
+      "checked_at": "2026-11-12T01:17:10Z",
       "listed_title": "A machine learning model based on GAN-ANN data augmentation for predicting the bond strength of FRP-reinforced concrete under high-temperature conditions",
       "listed_venue": "Composite Structures 369, 119321, 2025",
       "listed_year": "2025"
@@ -45,7 +45,7 @@
       "work_id": "_gNt3W8AAAAJ:9yKSN-GCB0IC",
       "count": 6,
       "cluster": "16965351680424235215",
-      "checked_at": "2026-11-11T07:21:53Z",
+      "checked_at": "2026-11-12T01:17:10Z",
       "listed_title": "Prestressed UHPC beam flexural capacity prediction improvement with constraint-guided neural networks",
       "listed_venue": "International Journal of Bridge Engineering, Management and Research 2 (3 …, 2025",
       "listed_year": "2025"
@@ -53,7 +53,7 @@
   },
   "publication_scan": {
     "version": 1,
-    "checked_at": "2026-11-11T07:21:53Z",
+    "checked_at": "2026-11-12T01:17:10Z",
     "observed_count": 5,
     "added": [],
     "updated": [],
