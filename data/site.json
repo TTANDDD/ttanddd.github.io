@@ -32,6 +32,40 @@
   ],
   "papers": [
     {
+      "id": "micius-flash",
+      "field": "agents",
+      "status": "preprint",
+      "year": 2026,
+      "title": "Micius-Flash: Lightweight Agentic Intelligence for Engineering",
+      "zh_title": "Micius-Flash：面向工程的轻量级智能体模型",
+      "note": {
+        "en": "Micius-Flash connects a 27B multimodal model to engineering tools. I designed and tested tasks in which the model built a CAD hole-pattern plugin and reproduced Blender modeling workflows in PySide6.",
+        "zh": "Micius-Flash 将 270 亿参数的多模态模型接入工程软件。我设计并测试了两项任务，让模型开发 CAD 孔阵列插件，并用 PySide6 复现 Blender 的建模流程。"
+      },
+      "venue": "arXiv",
+      "role": "coauthor",
+      "authors": "Hongcheng Gao, Weiheng Li, Yipeng Wei, …, Hailong Qu, …, Zeqiang Wang",
+      "citation": "2611.10015",
+      "links": [["arXiv", "https://arxiv.org/abs/2611.10015"]],
+      "figures": [
+        {
+          "file": "micius-flash-fig4.png",
+          "number": "4",
+          "layout": "primary",
+          "width": 1800,
+          "height": 1013,
+          "view_box": [5, 225, 1770, 606],
+          "caption": {
+            "en": "During post-training the student generates its own responses and tool-use trajectories. Each of four teachers provides feedback in its specialty, covering reasoning, coding, multimodal understanding, and tool use.",
+            "zh": "后训练时，四个教师模型分别指导知识推理、代码、多模态理解和工具使用。学生模型先生成回答或操作轨迹，再从对应的教师模型获得反馈。"
+          },
+          "source": "https://arxiv.org/html/2611.10015v1#S3.F4",
+          "credit": "Micius Team (2026) · arXiv:2611.10015v1, Figure 4",
+          "license": ""
+        }
+      ]
+    },
+    {
       "id": "engiworld",
       "field": "agents",
       "status": "preprint",

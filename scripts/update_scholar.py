@@ -242,7 +242,7 @@ def main(argv=None):
             raise
         report("deferred", f"Google Scholar returned HTTP {error.code}; no new data was fetched. "
                f"The verified snapshot from {checked.isoformat()} is unchanged, including its "
-               "verification date. The local scheduled fallback can retry if today's update is missing.")
+               "verification date. A later manual run can retry the request.")
         return
     checked = datetime.now(timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z")
     extract(root, site, previous, checked)  # Validate author identity and totals before discovering new papers.
@@ -264,7 +264,7 @@ def main(argv=None):
            f"Public metadata checks: {scan['status']} ({scan['source_errors']} source errors).")
     if scan["source_errors"] and os.environ.get("GITHUB_ACTIONS") == "true":
         print("::warning title=Publication verification incomplete::Some public metadata sources were unavailable. "
-              "Only independently verified records were published; unresolved checks will be retried on the next daily run.")
+              "A later manual run can retry the unresolved checks.")
 
 
 if __name__ == "__main__":
