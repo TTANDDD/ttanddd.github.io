@@ -18,7 +18,7 @@ FIELDS = [
     ("agents", r"\b(agent|agents|multimodal|spatial reasoning)\b", "Engineering agents & spatial reasoning", "工程智能体与空间推理"),
     ("wind", r"\b(wind|turbine|turbines|wake|wakes)\b", "Wind energy engineering", "风能工程"),
     ("structures", r"\b(uhpc|concrete|frp|beam|beams|structural|composite materials)\b", "Structural engineering & composite materials", "结构工程与复合材料"),
-    ("built-environment", r"\b(indoor|co2|air quality|building ventilation)\b", "Built environment & air quality", "建筑环境与空气质量"),
+    ("built-environment", r"\b(indoor|classroom|co[2₂]|air quality|building ventilation)\b", "Built environment & air quality", "建筑环境与空气质量"),
     ("electrical", r"\b(electrical|power grid|power line|power lines|transmission line|transmission lines|insulator|insulators)\b", "Electrical engineering", "电气工程"),
     ("medical", r"\b(fracture|fractures|medical|clinical|pediatric|radiograph|radiographs)\b", "Medical imaging & healthcare", "医学影像与医疗健康"),
     ("food-environment", r"\b(grain|food safety|postharvest|ozone|voc)\b", "Food & environmental science", "食品与环境科学"),
@@ -159,6 +159,50 @@ def identifiers(paper):
     return output
 
 
+def apply_publication(site, metadata, scan, existing=None):
+    """Merge one verified public record without replacing editorial content."""
+    source_ids = {"doi:" + metadata["doi"].lower()} if metadata.get("doi") else set()
+    if metadata.get("arxiv_id"):
+        source_ids.add("arxiv:" + metadata["arxiv_id"])
+    if not existing:
+        existing = next((p for p in site["papers"] if source_ids & identifiers(p)
+                         or same_title(p["title"], metadata["title"])), None)
+    label = "DOI" if metadata["status"] == "published" else "arXiv"
+    link = [label, metadata["url"]]
+    source = {"registry": metadata["source"], "url": metadata["url"], "verified_at": scan["checked_at"]}
+    if existing:
+        if existing["status"] == "published" and metadata["status"] == "preprint":
+            return
+        before = deepcopy(existing)
+        if not same_title(existing["title"], metadata["title"]):
+            existing["title"] = metadata["title"]
+            existing.pop("zh_title", None)
+        if existing["venue"] != metadata["venue"]:
+            existing.pop("top", None)
+        for key in ("venue", "year", "status", "citation"):
+            if key != "citation" or metadata[key] or key in existing:
+                existing[key] = metadata[key]
+        if link not in existing["links"]:
+            existing["links"].insert(0, link)
+        if existing != before:
+            existing["public_source"] = source
+            scan["updated"].append(existing["id"])
+        return
+    field = next(f for f in FIELDS if not f[1] or re.search(f[1], metadata["title"], re.I))
+    if not any(f["id"] == field[0] for f in site["fields"]):
+        site["fields"].append({"id": field[0], "name": {"en": field[2], "zh": field[3]}})
+    key = "pub-" + sha256(metadata["url"].encode()).hexdigest()[:12]
+    new = {"id": key, "field": field[0], "status": metadata["status"], "year": metadata["year"],
+           "title": metadata["title"], "venue": metadata["venue"], "authors": ", ".join(metadata["authors"]),
+           "citation": metadata["citation"], "links": [link], "figures": [], "public_source": source}
+    if has_author(metadata["authors"][:1], site["person"]):
+        new["role"] = "first"
+    if metadata.get("arxiv_id") and metadata["status"] == "published":
+        new["links"].append(["arXiv", "https://arxiv.org/abs/" + metadata["arxiv_id"]])
+    site["papers"].insert(0, new)
+    scan["added"].append(key)
+
+
 def sync_publications(records, site, previous, checked):
     updated = deepcopy(site)
     papers = updated["papers"]
@@ -179,50 +223,6 @@ def sync_publications(records, site, previous, checked):
             if not existing or changed:
                 scan["unverified_count"] += 1
             continue
-        source_ids = {"doi:" + metadata["doi"].lower()} if metadata.get("doi") else set()
-        if metadata.get("arxiv_id"):
-            source_ids.add("arxiv:" + metadata["arxiv_id"])
-        if not existing:
-            existing = next((p for p in papers if source_ids & identifiers(p)
-                             or same_title(p["title"], metadata["title"])), None)
-        if existing and existing["status"] == "published" and metadata["status"] == "preprint":
-            continue
-        if existing:
-            before = deepcopy(existing)
-            if not same_title(existing["title"], metadata["title"]):
-                existing["title"] = metadata["title"]
-                existing.pop("zh_title", None)
-            if existing["venue"] != metadata["venue"]:
-                existing.pop("top", None)
-            for key in ("venue", "year", "status", "citation"):
-                if key != "citation" or metadata[key] or key in existing:
-                    existing[key] = metadata[key]
-            # Preserve author roles, descriptions and figures; do not invent new rankings.
-            label = "DOI" if metadata["status"] == "published" else "arXiv"
-            pair = [label, metadata["url"]]
-            if pair not in existing["links"]:
-                existing["links"].insert(0, pair)
-            if existing != before:
-                existing["public_source"] = {"registry": metadata["source"],
-                                             "url": metadata["url"], "verified_at": checked}
-                scan["updated"].append(existing["id"])
-            continue
-        field = next(f for f in FIELDS if not f[1] or re.search(f[1], metadata["title"], re.I))
-        if not any(f["id"] == field[0] for f in updated["fields"]):
-            updated["fields"].append({"id": field[0], "name": {"en": field[2], "zh": field[3]}})
-        key = "pub-" + sha256(metadata["url"].encode()).hexdigest()[:12]
-        new = {"id": key, "field": field[0], "status": metadata["status"],
-               "year": metadata["year"], "title": metadata["title"],
-               "venue": metadata["venue"], "authors": ", ".join(metadata["authors"]),
-               "citation": metadata["citation"],
-               "links": [["DOI" if metadata["status"] == "published" else "arXiv", metadata["url"]]],
-               "figures": [], "public_source": {"registry": metadata["source"],
-                   "url": metadata["url"], "verified_at": checked}}
-        if has_author(metadata["authors"][:1], site["person"]):
-            new["role"] = "first"
-        if metadata.get("arxiv_id") and metadata["status"] == "published":
-            new["links"].append(["arXiv", "https://arxiv.org/abs/" + metadata["arxiv_id"]])
-        papers.insert(0, new)
-        scan["added"].append(key)
+        apply_publication(updated, metadata, scan, existing)
     scan["status"] = "partial" if scan["source_errors"] else "complete"
     return updated, scan

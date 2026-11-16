@@ -13,6 +13,8 @@ ORIGIN = "https://ttanddd.github.io"
 DATA = json.loads((ROOT / "data/site.json").read_text(encoding="utf-8"))
 LABELS = json.loads((ROOT / "data/interface.json").read_text(encoding="utf-8"))
 SCHOLAR = json.loads((ROOT / "data/scholar.json").read_text(encoding="utf-8"))
+OPENALEX_PATH = ROOT / "data/openalex.json"
+OPENALEX = json.loads(OPENALEX_PATH.read_text(encoding="utf-8")) if OPENALEX_PATH.exists() else None
 PERSON = DATA["person"]
 LINK_LABELS = {"Project": "project", "Code": "code", "Paper": "paper"}
 SECTIONS = [("about", "about"), ("research", "research"), ("publications", "pubs"), ("background", "background")]
@@ -113,13 +115,18 @@ def paper_entry(paper, locale, base):
     meta.append(h(t[status + "State"]))
     if paper.get("top"):
         meta.append(f'<span class="rank" title="{h(t["tierHelp"])}">{h(t["tier"])}</span>')
-    record = SCHOLAR["papers"].get(paper["id"], {})
+    record = (OPENALEX or SCHOLAR)["papers"].get(paper["id"], {})
     if record.get("count") is not None:
-        if record.get("cluster"):
+        if OPENALEX:
+            dest = record["work"]
+            citation_label = t["openalexCited"]
+        elif record.get("cluster"):
             dest = "https://scholar.google.com/scholar?cites=" + record["cluster"]
+            citation_label = t["cited"]
         else:
             dest = PERSON["scholar"] + "&view_op=view_citation&citation_for_view=" + record["work_id"]
-        meta.append(external(t["cited"].format(n=record["count"]), dest, "cited"))
+            citation_label = t["cited"]
+        meta.append(external(citation_label.format(n=record["count"]), dest, "cited"))
     separator = '<span class="sep" aria-hidden="true">·</span>'
     figures = "".join(paper_figure(fig,locale,base) for fig in paper.get("figures", []))
     figures = f'<div class="figure-grid">{figures}</div>' if figures else ""
@@ -150,13 +157,25 @@ def publication_filters(t):
                    f'{h(t[key])}<span class="tab-count">{counts[key]}</span></button>' for key in ("all","published","preprint"))
 
 
+def date_tag(timestamp, locale):
+    checked = datetime.fromisoformat(timestamp.replace("Z","+00:00")).astimezone(timezone(timedelta(hours=8)))
+    stamp = checked.strftime("%b %d, %Y") if locale == "en" else f"{checked.year} 年 {checked.month} 月 {checked.day} 日"
+    return f'<time datetime="{h(timestamp)}">{h(stamp)}</time>'
+
+
 def metrics(locale):
     t = LABELS[locale]
-    checked = datetime.fromisoformat(SCHOLAR["checked_at"].replace("Z","+00:00")).astimezone(timezone(timedelta(hours=8)))
-    stamp = checked.strftime("%b %d, %Y") if locale == "en" else f"{checked.year} 年 {checked.month} 月 {checked.day} 日"
-    stats = "".join(f'<div><dt>{h(t[key])}</dt><dd>{SCHOLAR[key]}</dd></div>' for key in ("citations","h_index","i10_index"))
-    return (f'<aside class="scholar-metrics" aria-label="{h(t["stats"])}">{external(t["stats"],SCHOLAR["profile"],"metrics-link")}'
-            f'<dl>{stats}</dl><p>{h(t["checked"])} <time datetime="{h(SCHOLAR["checked_at"])}">{h(stamp)}</time></p></aside>')
+    snapshot = OPENALEX or SCHOLAR
+    source, url = ("OpenAlex", "/data/openalex.json") if OPENALEX else (t["stats"], SCHOLAR["profile"])
+    stats = "".join(f'<div><dt>{h(t[key])}</dt><dd>{snapshot[key]}</dd></div>' for key in ("citations","h_index","i10_index"))
+    coverage, history = "", ""
+    if OPENALEX:
+        coverage = h(t["coverage"].format(n=len(OPENALEX["papers"]), total=len(DATA["papers"]))) + " · "
+        prior = h(t["scholarSnapshot"].format(n=SCHOLAR["citations"], h=SCHOLAR["h_index"], i=SCHOLAR["i10_index"]))
+        history = (f'<p class="metrics-history">{external(t["stats"], SCHOLAR["profile"])} · '
+                   f'{date_tag(SCHOLAR["checked_at"], locale)} · {prior}</p>')
+    return (f'<aside class="scholar-metrics" aria-label="{h(source)}">{external(source,url,"metrics-link")}'
+            f'<dl>{stats}</dl><p>{coverage}{h(t["checked"])} {date_tag(snapshot["checked_at"], locale)}</p>{history}</aside>')
 
 
 def organization_header(logo, name, period, role, t):

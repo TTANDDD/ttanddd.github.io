@@ -4,14 +4,17 @@
 
 Edit `data/site.json` for public publications, figures, and projects. Interface text lives in `data/interface.json`. Run `python scripts/build.py` to render both editions, then commit the generated HTML. The paper figures link to their original articles. Click a figure for the full image, credit and source.
 
-Scholar updates are manual. To refresh the citation metrics and publication list, select **Refresh Scholar citations and publications** in GitHub Actions and choose **Run workflow**. A successful fetch commits `data/scholar.json`, verified changes to `data/site.json`, and both rendered pages, then requests a GitHub Pages build. The website shows the date of its last verified citation snapshot.
+GitHub Actions refreshes the site daily at 08:17 Beijing time (00:17 UTC). To run a check immediately, open **Refresh citations and public publications** and choose **Run workflow**. The same commands run locally with Python 3.10 or later:
 
-New Scholar records are checked against public Crossref journal/conference article metadata or an arXiv abstract page. Both the title and the author's full name must match. Datasets, unverified candidates, and accepted or submitted manuscripts without a verified public article are not added. Preprints are checked for a journal version and updated in place when verified; DOI/arXiv identities prevent duplicate entries. Disappearing Scholar records do not automatically delete existing publications. The script retains user-written contributions, figures, and author-role annotations. New entries use verified bibliographic metadata and an appropriate research field; they do not invent translations, contribution statements, journal rankings, or images. Both language editions can display the original title until a Chinese translation is supplied.
+```sh
+python -B scripts/refresh_publications.py
+python -B scripts/build.py
+```
 
-`publication_scan` in `data/scholar.json` records the scan time, number of observed records, added or updated public IDs, and counts of unresolved candidates or source failures. The Actions summary marks incomplete public metadata checks as partial.
+The refresh looks for newly indexed works in OpenAlex author groups linked to the listed papers, recent ranked Crossref journal deposits, and arXiv records deposited in DataCite. Crossref article metadata or the arXiv abstract page verifies each new entry. A matching full name requires two known collaborators, or one known collaborator plus a matching institution on the author's own byline. An explicit registry link can identify a journal version of an existing arXiv paper. The site lists published articles and public arXiv preprints. SSRN postings and private submissions are outside its publication list. Registry indexing can lag publication, and ambiguous author matches are counted in the run summary.
 
-The Actions summary distinguishes `current` (already checked today), `refreshed` (new data verified), and `deferred` (Scholar returned HTTP 403/429 and the previous verified snapshot was retained). Other request errors, incomplete or invalid profiles, and build or push errors fail the workflow.
+OpenAlex supplies citation counts by DOI. The total, h-index and i10-index use the distinct indexed works on the homepage. The page shows coverage, the date of the citation snapshot, and a separately dated Google Scholar snapshot. A missing previously indexed record retains the prior citation snapshot and verification date. Temporary source failures appear in the Actions summary. The routine accepts an optional `OPENALEX_API_KEY` repository secret for installations that need higher API limits.
 
-For a manual local refresh, run `python scripts/refresh_if_stale.py` from a machine with repository write access. It checks the date of the public snapshot before contacting Scholar, works in a temporary clone when needed, and verifies the resulting public update.
+The workflow saves `data/openalex.json`, any verified changes to `data/site.json`, and both language editions in one commit. The Google Scholar snapshot in `data/scholar.json` retains its own source and date. Scheduled runs use the public registry APIs.
 
 GitHub Pages serves the root of the main branch. Image credits appear alongside the figures and in the footer. Font licenses are in `assets/fonts/`.
