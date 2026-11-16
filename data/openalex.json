@@ -1,0 +1,55 @@
+{
+  "source": "OpenAlex",
+  "checked_at": "2026-11-16T07:30:46Z",
+  "citations": 53,
+  "h_index": 2,
+  "i10_index": 1,
+  "papers": {
+    "pub-89aad08bacbb": {
+      "doi": "10.1016/j.enbuild.2026.118501",
+      "work": "https://openalex.org/W7226028444",
+      "count": 0
+    },
+    "micius-flash": {
+      "doi": "10.48550/arxiv.2611.10015",
+      "work": "https://openalex.org/W7225721841",
+      "count": 0
+    },
+    "engiworld": {
+      "doi": "10.48550/arxiv.2609.37686",
+      "work": "https://openalex.org/W7214948206",
+      "count": 1
+    },
+    "spatialworld": {
+      "doi": "10.48550/arxiv.2606.09669",
+      "work": "https://openalex.org/W7164000782",
+      "count": 9
+    },
+    "offshore": {
+      "doi": "10.1016/j.oceaneng.2026.126286",
+      "work": "https://openalex.org/W7162853962",
+      "count": 2
+    },
+    "bond": {
+      "doi": "10.1016/j.compstruct.2025.119321",
+      "work": "https://openalex.org/W4410618042",
+      "count": 39
+    },
+    "uhpc": {
+      "doi": "10.70465/ber.v2i3.31",
+      "work": "https://openalex.org/W4412371459",
+      "count": 2
+    }
+  },
+  "publication_scan": {
+    "checked_at": "2026-11-16T07:30:46Z",
+    "added": [
+      "pub-89aad08bacbb"
+    ],
+    "updated": [],
+    "unconfirmed": 0,
+    "unavailable_sources": [],
+    "status": "complete",
+    "last_complete": "2026-11-16T07:30:46Z"
+  }
+}

@@ -28,9 +28,39 @@
         "en": "Structural engineering & composite materials",
         "zh": "结构工程与复合材料"
       }
+    },
+    {
+      "id": "built-environment",
+      "name": {
+        "en": "Built environment & air quality",
+        "zh": "建筑环境与空气质量"
+      }
     }
   ],
   "papers": [
+    {
+      "id": "pub-89aad08bacbb",
+      "field": "built-environment",
+      "status": "published",
+      "year": 2026,
+      "title": "Probabilistic short-term forecasting of spatially heterogeneous classroom CO₂ fields with graph-spectral increment diffusion",
+      "venue": "Energy and Buildings",
+      "authors": "Hailong Qu, Zebin Yang, Feng Wang, Zhengyang Zhang, Zhaolin Gu, Zhongke Qu",
+      "citation": "118501",
+      "links": [
+        [
+          "DOI",
+          "https://doi.org/10.1016/j.enbuild.2026.118501"
+        ]
+      ],
+      "figures": [],
+      "public_source": {
+        "registry": "Crossref",
+        "url": "https://doi.org/10.1016/j.enbuild.2026.118501",
+        "verified_at": "2026-11-16T07:30:46Z"
+      },
+      "role": "first"
+    },
     {
       "id": "micius-flash",
       "field": "agents",
@@ -46,7 +76,12 @@
       "role": "coauthor",
       "authors": "Hongcheng Gao, Weiheng Li, Yipeng Wei, …, Hailong Qu, …, Zeqiang Wang",
       "citation": "2611.10015",
-      "links": [["arXiv", "https://arxiv.org/abs/2611.10015"]],
+      "links": [
+        [
+          "arXiv",
+          "https://arxiv.org/abs/2611.10015"
+        ]
+      ],
       "figures": [
         {
           "file": "micius-flash-fig4.png",
@@ -54,7 +89,12 @@
           "layout": "primary",
           "width": 1800,
           "height": 1013,
-          "view_box": [5, 225, 1770, 606],
+          "view_box": [
+            5,
+            225,
+            1770,
+            606
+          ],
           "caption": {
             "en": "During post-training the student generates its own responses and tool-use trajectories. Each of four teachers provides feedback in its specialty, covering reasoning, coding, multimodal understanding, and tool use.",
             "zh": "后训练时，四个教师模型分别指导知识推理、代码、多模态理解和工具使用。学生模型先生成回答或操作轨迹，再从对应的教师模型获得反馈。"
@@ -138,7 +178,12 @@
           "number": "1",
           "width": 1600,
           "height": 1241,
-          "view_box": [34, 40, 1534, 1121],
+          "view_box": [
+            34,
+            40,
+            1534,
+            1121
+          ],
           "caption": {
             "en": "Agents use first-person observations to act in indoor, street and game environments. The benchmark checks their final state and the number of actions taken.",
             "zh": "智能体根据第一人称观测在室内、街道和游戏环境中行动。基准检查任务终态，并对照参考轨迹评估执行步数。"
@@ -178,7 +223,12 @@
           "layout": "primary",
           "width": 1560,
           "height": 457,
-          "view_box": [0, 0, 1540, 457],
+          "view_box": [
+            0,
+            0,
+            1540,
+            457
+          ],
           "caption": {
             "en": "Six networks are pretrained on 5 MW turbine simulations and fine-tuned on 15 MW data. One predicts power and the other five each predict a fatigue load.",
             "zh": "先用 5 MW 风机仿真数据预训练六个网络，再用 15 MW 风机数据微调全部参数。一个网络预测功率，其余五个分别预测一项疲劳载荷。"
@@ -193,7 +243,12 @@
           "layout": "disclosure",
           "width": 1560,
           "height": 1024,
-          "view_box": [10, 4, 1540, 1010],
+          "view_box": [
+            10,
+            4,
+            1540,
+            1010
+          ],
           "caption": {
             "en": "Predicted and simulated power and fatigue loads for the 15 MW target turbine. Blue points are training cases and red points are test cases.",
             "zh": "15 MW 目标风机的功率与疲劳载荷预测值和仿真值对照。蓝点为训练工况，红点为测试工况。"
