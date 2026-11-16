@@ -40,6 +40,14 @@
         top = y;
       }
     }
+    const visiblePaper = [...document.querySelectorAll(".paper:not([hidden])")].find(node => {
+      const rect = node.getBoundingClientRect();
+      return rect.top >= edge && rect.top < innerHeight * .65 && rect.bottom > edge;
+    });
+    if (visiblePaper) {
+      marker = visiblePaper;
+      top = marker.getBoundingClientRect().top;
+    }
     const hashTarget = document.getElementById(location.hash.slice(1));
     const hashIsCurrent = hashTarget && (Math.abs(hashTarget.getBoundingClientRect().top - edge) < 32 ||
                           hashTarget === marker || (hashTarget.matches(".paper") && hashTarget.contains(marker)));
@@ -77,6 +85,7 @@
 
     // Measure after the fetch, so reading or scrolling during a slow connection is respected.
     const position = readingPosition();
+    document.dispatchEvent(new Event("site:beforelocalechange"));
     const openDetails = [...document.querySelectorAll("details[open]")].map(detail => detail.id);
     const openFigure = document.querySelector(".figure-viewer[open] [data-full]")?.href;
     const menuOpen = document.querySelector(".menu").getAttribute("aria-expanded") === "true";
@@ -109,6 +118,7 @@
     }
     if (trigger) document.querySelector(focusArea + " [data-language]").focus({preventScroll:true});
     restorePosition(position);
+    document.dispatchEvent(new Event("site:positionrestored"));
     if (openFigure) [...document.querySelectorAll("[data-figure]")].find(link => link.href === openFigure)?.click();
     root.style.removeProperty("overflow-anchor");
   }

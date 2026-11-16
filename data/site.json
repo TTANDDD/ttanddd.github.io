@@ -53,13 +53,34 @@
           "https://doi.org/10.1016/j.enbuild.2026.118501"
         ]
       ],
-      "figures": [],
+      "figures": [
+        {
+          "file": "co2-graphical-abstract.jpg",
+          "number": "GA",
+          "label": {"en": "Graphical abstract", "zh": "图形摘要"},
+          "layout": "primary",
+          "width": 1833,
+          "height": 886,
+          "caption": {
+            "en": "Graphical abstract. Observed CO₂ history and occupancy/ventilation inputs condition graph-spectral diffusion to generate coherent future fields and summarize forecast uncertainty.",
+            "zh": "图形摘要。将 CO₂ 历史场与人员、通风条件输入图频谱扩散模型，生成未来场的多种可能演化，并汇总预测不确定性。"
+          },
+          "source": "https://www.sciencedirect.com/science/article/pii/S0378778826015616",
+          "credit": "Qu et al. (2026) · Energy and Buildings · DOI: 10.1016/j.enbuild.2026.118501 · Graphical abstract",
+          "license": ""
+        }
+      ],
       "public_source": {
         "registry": "Crossref",
         "url": "https://doi.org/10.1016/j.enbuild.2026.118501",
         "verified_at": "2026-11-16T07:30:46Z"
       },
-      "role": "first"
+      "role": "first",
+      "zh_title": "基于图频谱增量扩散的非均匀教室 CO₂ 场短期概率预测",
+      "note": {
+        "en": "Graph-spectral increment diffusion generates possible future classroom CO₂ fields, with forecasts of the mean, predictive spread and threshold-exceedance probability.",
+        "zh": "利用图频谱增量扩散生成教室 CO₂ 场的可能演化，给出均值、预测离散程度与超阈值概率。"
+      }
     },
     {
       "id": "micius-flash",
