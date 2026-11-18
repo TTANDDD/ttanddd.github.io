@@ -39,6 +39,28 @@
   ],
   "papers": [
     {
+      "id": "pub-dede52f03599",
+      "field": "agents",
+      "status": "preprint",
+      "year": 2026,
+      "title": "Does a completed simulation run mean a usable urban wind result for AI agents?",
+      "venue": "arXiv",
+      "authors": "Qu, Zhongke, Zhang, Yunwei, Su, Junwei, Zhang, Yabin, Li, Chengwei, Shui, Qingxiang, Qu, Hailong, Gu, Zhaolin",
+      "citation": "",
+      "links": [
+        [
+          "arXiv",
+          "https://arxiv.org/abs/2611.19385"
+        ]
+      ],
+      "figures": [],
+      "public_source": {
+        "registry": "arXiv",
+        "url": "https://arxiv.org/abs/2611.19385",
+        "verified_at": "2026-11-18T07:35:57Z"
+      }
+    },
+    {
       "id": "pub-89aad08bacbb",
       "field": "built-environment",
       "status": "published",
@@ -57,7 +79,10 @@
         {
           "file": "co2-graphical-abstract.jpg",
           "number": "GA",
-          "label": {"en": "Graphical abstract", "zh": "图形摘要"},
+          "label": {
+            "en": "Graphical abstract",
+            "zh": "图形摘要"
+          },
           "layout": "primary",
           "width": 1833,
           "height": 886,

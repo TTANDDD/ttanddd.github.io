@@ -1,6 +1,6 @@
 {
   "source": "OpenAlex",
-  "checked_at": "2026-11-17T07:59:35Z",
+  "checked_at": "2026-11-18T07:35:57Z",
   "citations": 62,
   "h_index": 4,
   "i10_index": 2,
@@ -42,12 +42,14 @@
     }
   },
   "publication_scan": {
-    "checked_at": "2026-11-17T07:59:35Z",
-    "added": [],
+    "checked_at": "2026-11-18T07:35:57Z",
+    "added": [
+      "pub-dede52f03599"
+    ],
     "updated": [],
     "unconfirmed": 0,
     "unavailable_sources": [],
     "status": "complete",
-    "last_complete": "2026-11-17T07:59:35Z"
+    "last_complete": "2026-11-18T07:35:57Z"
   }
 }
