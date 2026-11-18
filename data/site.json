@@ -44,13 +44,23 @@
       "status": "preprint",
       "year": 2026,
       "title": "Does a completed simulation run mean a usable urban wind result for AI agents?",
+      "zh_title": "模拟跑完后，AI 智能体交付的城市风环境结果可用吗？",
       "venue": "arXiv",
-      "authors": "Qu, Zhongke, Zhang, Yunwei, Su, Junwei, Zhang, Yabin, Li, Chengwei, Shui, Qingxiang, Qu, Hailong, Gu, Zhaolin",
+      "role": "cocorresponding",
+      "authors": "Zhongke Qu, Yunwei Zhang, Junwei Su, Yabin Zhang, Chengwei Li, Qingxiang Shui, Hailong Qu, Zhaolin Gu",
+      "note": {
+        "en": "On 30 OpenFOAM tasks with independent references, UrbanWind-AgentBench checks whether metrics reported by AI agents can be recomputed from raw solver outputs.",
+        "zh": "基于 30 项有独立参考结果的 OpenFOAM 任务，UrbanWind-AgentBench 检查 AI 智能体报告的城市风环境指标能否从求解器原始输出复算。"
+      },
       "citation": "",
       "links": [
         [
           "arXiv",
           "https://arxiv.org/abs/2611.19385"
+        ],
+        [
+          "Project",
+          "https://ttanddd.github.io/urbanwind-agentbench/"
         ]
       ],
       "figures": [],
