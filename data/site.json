@@ -131,7 +131,7 @@
       "venue": "arXiv",
       "role": "coauthor",
       "authors": "Hongcheng Gao, Weiheng Li, Yipeng Wei, …, Hailong Qu, …, Zeqiang Wang",
-      "citation": "2611.10015",
+      "citation": "",
       "links": [
         [
           "arXiv",
@@ -159,7 +159,12 @@
           "credit": "Micius Team (2026) · arXiv:2611.10015v1, Figure 4",
           "license": ""
         }
-      ]
+      ],
+      "public_source": {
+        "registry": "arXiv",
+        "url": "https://arxiv.org/abs/2611.10015",
+        "verified_at": "2026-11-19T07:32:04Z"
+      }
     },
     {
       "id": "engiworld",

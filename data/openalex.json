@@ -1,10 +1,15 @@
 {
   "source": "OpenAlex",
-  "checked_at": "2026-11-18T07:35:57Z",
+  "checked_at": "2026-11-19T07:32:00Z",
   "citations": 62,
   "h_index": 4,
   "i10_index": 2,
   "papers": {
+    "pub-dede52f03599": {
+      "doi": "10.48550/arxiv.2611.19385",
+      "work": "https://openalex.org/W7234830786",
+      "count": 0
+    },
     "pub-89aad08bacbb": {
       "doi": "10.1016/j.enbuild.2026.118501",
       "work": "https://openalex.org/W7226028444",
@@ -42,14 +47,12 @@
     }
   },
   "publication_scan": {
-    "checked_at": "2026-11-18T07:35:57Z",
-    "added": [
-      "pub-dede52f03599"
-    ],
+    "checked_at": "2026-11-19T07:32:00Z",
+    "added": [],
     "updated": [],
     "unconfirmed": 0,
     "unavailable_sources": [],
     "status": "complete",
-    "last_complete": "2026-11-18T07:35:57Z"
+    "last_complete": "2026-11-19T07:32:00Z"
   }
 }
