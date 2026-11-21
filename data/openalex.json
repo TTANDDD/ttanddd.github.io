@@ -1,7 +1,7 @@
 {
   "source": "OpenAlex",
-  "checked_at": "2026-11-20T07:23:44Z",
-  "citations": 63,
+  "checked_at": "2026-11-21T07:16:18Z",
+  "citations": 64,
   "h_index": 4,
   "i10_index": 2,
   "papers": {
@@ -23,7 +23,7 @@
     "engiworld": {
       "doi": "10.48550/arxiv.2609.37686",
       "work": "https://openalex.org/W7214948206",
-      "count": 1
+      "count": 2
     },
     "spatialworld": {
       "doi": "10.48550/arxiv.2606.09669",
@@ -47,12 +47,12 @@
     }
   },
   "publication_scan": {
-    "checked_at": "2026-11-20T07:23:44Z",
+    "checked_at": "2026-11-21T07:16:18Z",
     "added": [],
     "updated": [],
     "unconfirmed": 0,
     "unavailable_sources": [],
     "status": "complete",
-    "last_complete": "2026-11-20T07:23:44Z"
+    "last_complete": "2026-11-21T07:16:18Z"
   }
 }
