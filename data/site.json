@@ -74,11 +74,11 @@
       "id": "pub-89aad08bacbb",
       "field": "built-environment",
       "status": "published",
-      "year": 2026,
+      "year": 2027,
       "title": "Probabilistic short-term forecasting of spatially heterogeneous classroom CO₂ fields with graph-spectral increment diffusion",
       "venue": "Energy and Buildings",
       "authors": "Hailong Qu, Zebin Yang, Feng Wang, Zhengyang Zhang, Zhaolin Gu, Zhongke Qu",
-      "citation": "118501",
+      "citation": "375, 118501",
       "links": [
         [
           "DOI",
@@ -113,8 +113,8 @@
       "role": "first",
       "zh_title": "基于图频谱增量扩散的非均匀教室 CO₂ 场短期概率预测",
       "note": {
-        "en": "Graph-spectral increment diffusion generates possible future classroom CO₂ fields, with forecasts of the mean, predictive spread and threshold-exceedance probability.",
-        "zh": "利用图频谱增量扩散生成教室 CO₂ 场的可能演化，给出均值、预测离散程度与超阈值概率。"
+        "en": "Graph-spectral increment diffusion generates possible future classroom CO₂ fields, with forecasts of the mean, predictive spread and threshold-exceedance probability. First published online in 2026.",
+        "zh": "利用图频谱增量扩散生成教室 CO₂ 场的可能演化，给出均值、预测离散程度与超阈值概率。 2026 年在线发表。"
       }
     },
     {
