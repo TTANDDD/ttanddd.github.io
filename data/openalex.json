@@ -1,7 +1,7 @@
 {
   "source": "OpenAlex",
-  "checked_at": "2026-11-22T06:56:56Z",
-  "citations": 65,
+  "checked_at": "2026-11-24T09:58:58Z",
+  "citations": 66,
   "h_index": 4,
   "i10_index": 2,
   "papers": {
@@ -28,7 +28,7 @@
     "spatialworld": {
       "doi": "10.48550/arxiv.2606.09669",
       "work": "https://openalex.org/W7164000782",
-      "count": 10
+      "count": 11
     },
     "offshore": {
       "doi": "10.1016/j.oceaneng.2026.126286",
@@ -47,12 +47,12 @@
     }
   },
   "publication_scan": {
-    "checked_at": "2026-11-22T06:56:56Z",
+    "checked_at": "2026-11-24T09:58:58Z",
     "added": [],
     "updated": [],
     "unconfirmed": 0,
     "unavailable_sources": [],
     "status": "complete",
-    "last_complete": "2026-11-22T06:56:56Z"
+    "last_complete": "2026-11-24T09:58:58Z"
   }
 }
