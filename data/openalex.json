@@ -1,7 +1,7 @@
 {
   "source": "OpenAlex",
-  "checked_at": "2026-11-27T08:42:04Z",
-  "citations": 66,
+  "checked_at": "2026-11-28T07:56:02Z",
+  "citations": 69,
   "h_index": 4,
   "i10_index": 2,
   "papers": {
@@ -23,12 +23,12 @@
     "engiworld": {
       "doi": "10.48550/arxiv.2609.37686",
       "work": "https://openalex.org/W7214948206",
-      "count": 3
+      "count": 4
     },
     "spatialworld": {
       "doi": "10.48550/arxiv.2606.09669",
       "work": "https://openalex.org/W7164000782",
-      "count": 11
+      "count": 12
     },
     "offshore": {
       "doi": "10.1016/j.oceaneng.2026.126286",
@@ -38,7 +38,7 @@
     "bond": {
       "doi": "10.1016/j.compstruct.2025.119321",
       "work": "https://openalex.org/W4410618042",
-      "count": 42
+      "count": 43
     },
     "uhpc": {
       "doi": "10.70465/ber.v2i3.31",
@@ -47,12 +47,12 @@
     }
   },
   "publication_scan": {
-    "checked_at": "2026-11-27T08:42:04Z",
+    "checked_at": "2026-11-28T07:56:02Z",
     "added": [],
     "updated": [],
     "unconfirmed": 0,
     "unavailable_sources": [],
     "status": "complete",
-    "last_complete": "2026-11-27T08:42:04Z"
+    "last_complete": "2026-11-28T07:56:02Z"
   }
 }
